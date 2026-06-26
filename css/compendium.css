@@ -176,3 +176,74 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .screen, .status.breath { animation: none; }
 }
+
+/* ── app navigation: a quiet bar shared by the writing and archive screens ─── */
+.app-nav {
+  width: 100%; max-width: var(--measure); margin: 0 auto 1.6rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.wordmark {
+  font-family: var(--label); font-size: 0.78rem; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--paper-dim);
+}
+.nav-link {
+  background: none; border: none; cursor: pointer; padding: 0;
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--paper-faint); transition: color 0.4s ease;
+}
+.nav-link:hover { color: var(--ember); }
+
+/* ── the archive: heatmap of a writing life ─────────────────────────────────── */
+#archive { justify-content: flex-start; overflow: auto; }
+#archive .app-nav { max-width: 64rem; }
+.archive-body { width: 100%; max-width: 64rem; margin: 1.5rem auto 0; }
+.archive-kicker { margin-bottom: 2rem; }
+
+.heatmap { display: flex; flex-direction: column; gap: 2.2rem; }
+.year-block { display: flex; align-items: flex-start; gap: 1.4rem; }
+.year-label { width: 4.5rem; flex: none; padding-top: 0.1rem; text-align: right; }
+.yl-year { display: block; font-family: var(--serif); font-size: 1.35rem; color: var(--paper); line-height: 1; }
+.yl-age {
+  display: block; margin-top: 0.35rem;
+  font-family: var(--label); font-size: 0.62rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ember-soft);
+}
+
+.year-grid {
+  display: grid; grid-template-rows: repeat(7, 11px); grid-auto-columns: 11px; gap: 3px;
+}
+
+/* intensity buckets, shared by cells and the legend swatches */
+.lvl-0 { background: #1d2129; }
+.lvl-1 { background: rgba(201, 138, 75, 0.28); }
+.lvl-2 { background: rgba(201, 138, 75, 0.50); }
+.lvl-3 { background: rgba(201, 138, 75, 0.72); }
+.lvl-4 { background: rgba(201, 138, 75, 0.95); }
+
+.cell {
+  width: 11px; height: 11px; padding: 0; border: none; border-radius: 2px;
+  cursor: default; transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.cell:not(.lvl-0) { cursor: pointer; }
+.cell:not(.lvl-0):hover { transform: scale(1.4); }
+.cell.is-today {
+  cursor: pointer;
+  box-shadow: 0 0 0 1.5px var(--ember), 0 0 7px rgba(201, 138, 75, 0.55);
+}
+
+.legend {
+  display: flex; align-items: center; gap: 5px; margin-top: 2.2rem;
+  font-family: var(--label); font-size: 0.62rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+.legend .lvl { width: 11px; height: 11px; border-radius: 2px; }
+.legend span:first-child { margin-right: 0.3rem; }
+.legend span:last-child { margin-left: 0.3rem; }
+
+/* ── reader: a single past day, read-only ───────────────────────────────────── */
+#reader { justify-content: flex-start; }
+.reader-body { width: 100%; max-width: var(--measure); margin: 2rem auto 0; }
+.reader-text {
+  white-space: pre-wrap; margin-top: 1.6rem;
+  font-size: 1.18rem; line-height: 1.85; color: var(--paper-dim);
+}

@@ -54,6 +54,7 @@ And, later, a constellation of recurring themes, unlocking after enough entries.
 - **No build step, no dependencies.** Vanilla HTML, CSS, and JavaScript keep it auditable and permanent. It will still run in ten years.
 - **`db.js` is the only place that touches storage.** Two IndexedDB stores: `entries` (keyed by `YYYY-MM-DD`) and `settings` (the birthdate). It contains no network code, by design.
 - **The data shape is forward-built.** Every saved entry already stores `tokens` and `wordCount`, so the heatmap (Phase 2), thread colouring (Phase 4), and constellation are pure UI work against data that already exists.
+- **Screens, not pages.** Each view (onboarding, today, archive, reader) is a `<section>` toggled by the `hidden` attribute. `ritual.js` owns the onboarding-to-today boot; `nav.js` owns every transition after that; `heatmap.js` renders the archive; and `util.js` holds the date and age helpers shared between the writing screen and the heatmap. There is no router and no framework.
 - **The "present to write" rule is enforced in code,** not convention. See the header comment in `ritual.js`.
 - **Offline without the stale-build trap.** The service worker is network-first: when online it always serves the latest file, and the cache is only a fallback for when you are genuinely offline. A `?reset` URL, gated to localhost, wipes the local store during development so onboarding can be tested. It can never fire on the deployed site.
 
@@ -62,8 +63,8 @@ And, later, a constellation of recurring themes, unlocking after enough entries.
 | Phase | What | State |
 |---|---|---|
 | 1 | The writing ritual: setup, today-only entry, autosave, read-back | Built |
-| 2 | The heatmap home | Planned |
-| 3 | The thread drilldown, previews, and full entry | Planned |
+| 2 | The heatmap home, with a read-only reader for any past day | Built |
+| 3 | The thread drilldown (month view) and hover previews | Planned |
 | 4 | Local theme detection surfaced in the UI | Planned (engine present) |
 | 5 | JSON export and import, PWA polish, the calm pass | Planned |
 | Later | Constellation view and the optional AI reflection unlock | Deferred |

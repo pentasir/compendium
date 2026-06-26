@@ -43,8 +43,8 @@ To install it as an app, open it in a browser and choose "Install" or "Add to Ho
 Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and rationale.
 
 - [x] **Phase 1: the writing ritual.** First-run setup, today-only entry, autosave, read-back.
-- [ ] **Phase 2: the heatmap home.** Years by days, intensity by length.
-- [ ] **Phase 3: the thread drilldown.** Day-by-day timeline, hover previews, full entries.
+- [x] **Phase 2: the heatmap home.** A year-by-year grid with the age you were down the left, cell intensity by entry length, and a read-only view of any past day.
+- [ ] **Phase 3: the thread drilldown.** Month view as a day-by-day timeline with hover previews.
 - [ ] **Phase 4: local pattern detection.** Recurring themes, surfaced from your own words, with no AI.
 - [ ] **Phase 5: polish, backup, deploy.** JSON export and import, PWA install, the calm pass.
 

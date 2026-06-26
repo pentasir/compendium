@@ -6,6 +6,7 @@
   <meta name="description" content="A daily reflection that stays on your device. One entry a day. You have to be here to write it." />
   <meta name="theme-color" content="#15171d" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
   <title>Compendium</title>
   <link rel="stylesheet" href="css/compendium.css" />
 </head>
@@ -40,6 +41,10 @@
 
   <!-- ───────────────────────── the daily ritual ───────────────────────── -->
   <main id="ritual" class="screen" hidden>
+    <nav class="app-nav">
+      <span class="wordmark">Compendium</span>
+      <button type="button" class="nav-link" id="to-archive">The archive</button>
+    </nav>
     <header class="ritual-head">
       <p class="dateline">
         <span id="weekday"></span><span class="dot-sep">·</span><span id="full-date"></span>
@@ -63,8 +68,36 @@
     </footer>
   </main>
 
-  <!-- ───────────────────────── already written today (read-back) ───────────────────────── -->
-  <!-- handled by ritual.js by toggling a class on <main> -->
+  <!-- ───────────────────────── the archive: a heatmap of the writing life ───────────────────────── -->
+  <section id="archive" class="screen" hidden>
+    <nav class="app-nav">
+      <span class="wordmark">Compendium</span>
+      <button type="button" class="nav-link" id="to-today">Write today</button>
+    </nav>
+    <div class="archive-body">
+      <p class="kicker archive-kicker">The shape of your years</p>
+      <div id="heatmap" class="heatmap"></div>
+      <div class="legend">
+        <span>Quiet</span>
+        <i class="lvl lvl-0"></i><i class="lvl lvl-1"></i><i class="lvl lvl-2"></i><i class="lvl lvl-3"></i><i class="lvl lvl-4"></i>
+        <span>Full</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── reading a single past day ───────────────────────── -->
+  <section id="reader" class="screen" hidden>
+    <nav class="app-nav">
+      <button type="button" class="nav-link" id="reader-back">← The archive</button>
+    </nav>
+    <article class="reader-body">
+      <p class="dateline">
+        <span id="reader-weekday"></span><span class="dot-sep">·</span><span id="reader-date"></span>
+        <span class="age" id="reader-age"></span>
+      </p>
+      <div class="reader-text" id="reader-text"></div>
+    </article>
+  </section>
 
   <script>
     // DEV-ONLY reset: visiting /?reset on localhost wipes the local store and
@@ -79,9 +112,12 @@
       }
     })();
   </script>
+  <script src="js/util.js"></script>
   <script src="js/db.js"></script>
   <script src="js/patterns.js"></script>
+  <script src="js/heatmap.js"></script>
   <script src="js/ritual.js"></script>
+  <script src="js/nav.js"></script>
   <script>
     // Register the service worker so the app works offline once installed.
     if ('serviceWorker' in navigator) {

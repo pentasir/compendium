@@ -21,24 +21,8 @@
   const ageLineEl  = document.getElementById('age-line');
   const form       = document.getElementById('birthdate-form');
 
-  // ── date + age helpers ────────────────────────────────────────────────────
-  function todayId(d = new Date()) {
-    // local date, not UTC: "today" is wherever the writer is
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
-  }
-
-  function ageOn(birthISO, d = new Date()) {
-    const b = new Date(birthISO + 'T00:00:00');
-    let age = d.getFullYear() - b.getFullYear();
-    const hadBirthday =
-      d.getMonth() > b.getMonth() ||
-      (d.getMonth() === b.getMonth() && d.getDate() >= b.getDate());
-    if (!hadBirthday) age -= 1;
-    return age;
-  }
+  // date + age helpers live in util.js (shared with the heatmap)
+  const { todayId, ageOn } = window.CDate;
 
   function paintDateline(birthISO) {
     const now = new Date();
