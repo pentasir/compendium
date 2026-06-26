@@ -10,6 +10,24 @@ It is local-first by design. There is no account, no server, and no network call
 
 > A timeline of your recurring thoughts, so you can see whether your thinking is moving or circling.
 
+## A look inside
+
+**The daily ritual.** One free-form entry a day, with a quiet prompt and an optional guidance note.
+
+![The writing screen](docs/writing.png)
+
+**The archive.** A heatmap of your writing life, year by year, with the age you were down the left and cell intensity by how much you wrote.
+
+![The heatmap archive](docs/heatmap.png)
+
+**The thread.** Clicking a day opens its month as a string of beads; hovering previews the day.
+
+![The month thread](docs/thread.png)
+
+**The reader.** Any past day, read back in full.
+
+![Reading a past entry](docs/reader.png)
+
 ## What it does
 
 - **One entry per day.** A single free-form writing surface that asks *"What's on your mind today?"* No tags, no fields, no structure. Just thought.

@@ -35,7 +35,7 @@
   --serif: 'Literata', 'Iowan Old Style', 'Palatino Linotype', 'Palatino', Georgia, 'Times New Roman', serif;
   --label: 'Avenir Next', 'Optima', 'Gill Sans', ui-sans-serif, sans-serif;
 
-  --measure: 34rem; /* comfortable reading/writing width */
+  --measure: 46rem; /* one consistent content width across every screen */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -69,11 +69,18 @@ body {
 .vignette {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(120% 90% at 50% -10%, rgba(201,138,75,0.07), transparent 55%),
+    /* lamp glow: many low-opacity stops with a long falloff, so it fades
+       smoothly instead of banding into a hard-edged semicircle */
+    radial-gradient(150% 115% at 50% -25%,
+      rgba(201,138,75,0.06) 0%,
+      rgba(201,138,75,0.035) 22%,
+      rgba(201,138,75,0.018) 42%,
+      rgba(201,138,75,0.006) 60%,
+      transparent 78%),
     radial-gradient(140% 120% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
 }
 .grain {
-  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.035;
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -246,8 +253,7 @@ body {
 
 /* ── the archive: heatmap of a writing life ─────────────────────────────────── */
 #archive { justify-content: flex-start; overflow: auto; }
-#archive .app-nav { max-width: 64rem; }
-.archive-body { width: 100%; max-width: 64rem; margin: 1.5rem auto 0; }
+.archive-body { width: 100%; max-width: var(--measure); margin: 1.5rem auto 0; }
 .archive-kicker { margin-bottom: 2rem; }
 .archive-empty {
   max-width: 30rem; font-style: italic; color: var(--paper-dim);
@@ -255,8 +261,8 @@ body {
 }
 
 .heatmap { display: flex; flex-direction: column; gap: 2.2rem; }
-.year-block { display: flex; align-items: flex-start; gap: 1.4rem; }
-.year-label { width: 4.5rem; flex: none; padding-top: 0.1rem; text-align: right; }
+.year-block { display: flex; align-items: flex-start; gap: 1.1rem; }
+.year-label { width: 3.6rem; flex: none; padding-top: 0.1rem; text-align: right; }
 .yl-year { display: block; font-family: var(--serif); font-size: 1.35rem; color: var(--paper); line-height: 1; }
 .yl-age {
   display: block; margin-top: 0.35rem;
@@ -265,7 +271,7 @@ body {
 }
 
 .year-grid {
-  display: grid; grid-template-rows: repeat(7, 11px); grid-auto-columns: 11px; gap: 3px;
+  display: grid; grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px; gap: 2px;
 }
 
 /* intensity buckets, shared by cells and the legend swatches */
@@ -276,7 +282,7 @@ body {
 .lvl-4 { background: rgba(201, 138, 75, 0.95); }
 
 .cell {
-  width: 11px; height: 11px; padding: 0; border: none; border-radius: 2px;
+  width: 10px; height: 10px; padding: 0; border: none; border-radius: 2px;
   cursor: default; transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 .cell:not(.lvl-0) { cursor: pointer; }
@@ -291,7 +297,7 @@ body {
   font-family: var(--label); font-size: 0.62rem; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--paper-faint);
 }
-.legend .lvl { width: 11px; height: 11px; border-radius: 2px; }
+.legend .lvl { width: 10px; height: 10px; border-radius: 2px; }
 .legend span:first-child { margin-right: 0.3rem; }
 .legend span:last-child { margin-left: 0.3rem; }
 
@@ -305,8 +311,7 @@ body {
 
 /* ── the thread: one month, day by day (round beads, distinct from the heatmap) ── */
 #thread { justify-content: flex-start; }
-#thread .app-nav { max-width: 44rem; }
-.thread-body { width: 100%; max-width: 44rem; margin: 1.5rem auto 0; }
+.thread-body { width: 100%; max-width: var(--measure); margin: 1.5rem auto 0; }
 .thread-title {
   font-family: var(--serif); font-weight: 400; font-size: 1.6rem;
   color: var(--paper); letter-spacing: -0.01em;
@@ -319,7 +324,7 @@ body {
 
 .thread-track {
   display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 2px;
-  margin: 2rem 0 2.4rem; overflow-x: auto;
+  margin: 2rem 0 2.4rem; padding-top: 5px; /* room for today's glow ring, no clipping */
 }
 .tday { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .tdot {
