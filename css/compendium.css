@@ -44,6 +44,14 @@
    screen stays in the page (off-screen) and its fields remain tabbable */
 [hidden] { display: none !important; }
 
+/* a clear, on-brand focus ring for keyboard users on every interactive control
+   (the writing textarea keeps its caret instead, so it is excluded) */
+.nav-link:focus-visible, .nav-cta:focus-visible, .begin-btn:focus-visible,
+.tip-dismiss:focus-visible, .cell:focus-visible, .tdot:focus-visible,
+.dob-field:focus-visible {
+  outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 2px;
+}
+
 html, body { height: 100%; }
 
 body {
@@ -241,6 +249,10 @@ body {
 #archive .app-nav { max-width: 64rem; }
 .archive-body { width: 100%; max-width: 64rem; margin: 1.5rem auto 0; }
 .archive-kicker { margin-bottom: 2rem; }
+.archive-empty {
+  max-width: 30rem; font-style: italic; color: var(--paper-dim);
+  font-size: 1.1rem; line-height: 1.7;
+}
 
 .heatmap { display: flex; flex-direction: column; gap: 2.2rem; }
 .year-block { display: flex; align-items: flex-start; gap: 1.4rem; }
@@ -288,7 +300,7 @@ body {
 .reader-body { width: 100%; max-width: var(--measure); margin: 2rem auto 0; }
 .reader-text {
   white-space: pre-wrap; margin-top: 1.6rem;
-  font-size: 1.18rem; line-height: 1.85; color: var(--paper-dim);
+  font-size: 1.18rem; line-height: 1.85; color: var(--paper);
 }
 
 /* ── the thread: one month, day by day (round beads, distinct from the heatmap) ── */

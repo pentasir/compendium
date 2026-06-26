@@ -79,10 +79,24 @@ const Heatmap = (() => {
     const byDate = new Map(entries.map((e) => [e.id, e]));
     const birthISO = settings ? settings.birthdate : null;
 
+    const legend = document.querySelector('.legend');
+    const written = entries.filter((e) => e.text && e.text.trim());
+
+    // empty state: nothing written yet, so the grid would read as broken
+    if (written.length === 0) {
+      host.innerHTML =
+        '<p class="archive-empty">Your years fill in here as you write. ' +
+        'There is nothing yet, which is exactly right at the beginning. ' +
+        'Come back after a few days and the shape will start to show.</p>';
+      if (legend) legend.hidden = true;
+      return;
+    }
+    if (legend) legend.hidden = false;
+
     const now = new Date();
     const thisYear = now.getFullYear();
     let firstYear = thisYear;
-    for (const e of entries) {
+    for (const e of written) {
       const y = parseInt(e.id.slice(0, 4), 10);
       if (y < firstYear) firstYear = y;
     }

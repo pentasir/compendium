@@ -65,6 +65,16 @@
   // reader: back returns to the month thread it was opened from
   document.getElementById('reader-back').addEventListener('click', () => show('thread'));
 
+  // Esc steps back one level: reader -> thread -> archive -> today
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const vis = (id) => !document.getElementById(id).hidden;
+    if (vis('reader')) show('thread');
+    else if (vis('thread')) show('archive');
+    else if (vis('archive')) show('ritual');
+    // on today / onboarding there is nowhere further back
+  });
+
   function openReader(entry) {
     const d = new Date(entry.id + 'T00:00:00');
     document.getElementById('reader-weekday').textContent =
