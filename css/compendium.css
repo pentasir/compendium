@@ -1,0 +1,178 @@
+/* ============================================================================
+   Compendium: a nocturne.
+   The interface is a lamp-lit desk at night: deep warm ink, low-contrast
+   paper-white text, a single muted ember accent. Calm, unhurried, literary.
+   ============================================================================ */
+
+:root {
+  /* ink: never pure black; a warm blue-charcoal, like a dim room */
+  --ink:        #15171d;
+  --ink-soft:   #1c1f27;
+  --ink-line:   #2a2e38;
+
+  /* paper: warm off-white, deliberately below max contrast so it never glares */
+  --paper:      #e7e2d6;
+  --paper-dim:  #9a958a;
+  --paper-faint:#5f5d57;
+
+  /* ember: the one accent. the "today" marker, the cursor, the saved-breath. */
+  --ember:      #c98a4b;
+  --ember-soft: #8a6238;
+
+  /* type */
+  --serif: 'Iowan Old Style', 'Palatino Linotype', 'Palatino', 'Hoefler Text', Georgia, 'Times New Roman', serif;
+  --label: 'Avenir Next', 'Optima', 'Gill Sans', ui-sans-serif, sans-serif;
+
+  --measure: 34rem; /* comfortable reading/writing width */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* the hidden attribute must win over .screen's display:flex, or a hidden
+   screen stays in the page (off-screen) and its fields remain tabbable */
+[hidden] { display: none !important; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden; /* the ritual is a single still surface */
+}
+
+/* ── atmosphere: a faint lamp glow from above, and a film of grain ─────────── */
+.vignette {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(201,138,75,0.07), transparent 55%),
+    radial-gradient(140% 120% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
+}
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── screens ───────────────────────────────────────────────────────────────── */
+.screen {
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  padding: clamp(2rem, 6vh, 5rem) clamp(1.5rem, 6vw, 4rem);
+  animation: settle 1.2s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes settle {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── onboarding ──────────────────────────────────────────────────────────── */
+#onboarding { justify-content: center; }
+.onboarding-inner { max-width: var(--measure); margin: 0 auto; text-align: center; }
+.kicker {
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ember); margin-bottom: 1.6rem;
+}
+.onboarding-title {
+  font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 2.4rem); line-height: 1.25;
+  letter-spacing: -0.01em; margin-bottom: 1.2rem;
+}
+.onboarding-body { color: var(--paper-dim); margin: 0 auto 2.4rem; max-width: 30rem; }
+
+.birthdate-form {
+  display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
+  max-width: 18rem; margin: 0 auto;
+}
+.field-label {
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+/* date of birth: three typed fields you can fill from memory, no scrolling */
+.dob {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--ink-soft); border: 1px solid var(--ink-line); border-radius: 2px;
+  padding: 0.55rem 0.9rem; width: fit-content;
+  transition: border-color 0.4s ease;
+}
+.dob:focus-within { border-color: var(--ember-soft); }
+.dob-field {
+  background: none; border: none; color: var(--paper);
+  font-family: var(--serif); font-size: 1.3rem; letter-spacing: 0.04em;
+  text-align: center; padding: 0.15rem 0;
+}
+.dob-field:focus { outline: none; }
+.dob-field::placeholder { color: var(--paper-faint); letter-spacing: 0.04em; }
+.dob-dd, .dob-mm { width: 3.2ch; }
+.dob-yyyy { width: 5.6ch; }
+.dob-sep { color: var(--ink-line); font-size: 1.2rem; }
+/* strip number-spinner chrome where browsers add it */
+.dob-field::-webkit-outer-spin-button,
+.dob-field::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.dob-error {
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.06em;
+  color: var(--ember); margin-top: 0.1rem; min-height: 1em;
+}
+.begin-btn {
+  align-self: center; margin-top: 0.4rem;
+  background: none; border: 1px solid var(--ember-soft); color: var(--ember);
+  font-family: var(--label); font-size: 0.78rem; letter-spacing: 0.16em;
+  text-transform: uppercase; padding: 0.7rem 1.6rem; border-radius: 2px;
+  cursor: pointer; transition: background 0.4s ease, color 0.4s ease;
+}
+.begin-btn:hover { background: var(--ember); color: var(--ink); }
+
+/* ── ritual: the writing surface ───────────────────────────────────────────── */
+#ritual { justify-content: flex-start; }
+
+.ritual-head { max-width: var(--measure); margin: 0 auto 0; width: 100%; }
+.dateline {
+  font-family: var(--label); font-size: 0.74rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--paper-faint);
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+}
+.dot-sep { color: var(--ink-line); }
+.age { margin-left: auto; color: var(--ember-soft); }
+
+.prompt-wrap {
+  max-width: var(--measure); margin: 0 auto; width: 100%;
+  flex: 1; display: flex; flex-direction: column; padding-top: clamp(2rem, 8vh, 5rem);
+}
+.prompt {
+  font-weight: 400; font-style: italic; font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1.3; color: var(--paper); margin-bottom: 1.8rem; letter-spacing: -0.01em;
+  transition: opacity 0.8s ease;
+}
+/* once the entry has text, the prompt recedes so the words own the room */
+#ritual.writing .prompt { opacity: 0.28; }
+
+.entry {
+  flex: 1; width: 100%; resize: none; border: none; background: none;
+  color: var(--paper); font-family: var(--serif); font-size: 1.18rem; line-height: 1.85;
+  caret-color: var(--ember); padding: 0 0 2rem;
+}
+.entry:focus { outline: none; }
+.entry::placeholder { color: var(--paper-faint); font-style: italic; }
+
+/* read-back state: a finished entry is calm and uneditable */
+#ritual.done .entry { color: var(--paper-dim); }
+#ritual.done .prompt { opacity: 0.28; }
+
+.ritual-foot {
+  max-width: var(--measure); margin: 0 auto; width: 100%;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--label); font-size: 0.7rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+.status { color: var(--ember-soft); transition: opacity 0.6s ease; }
+.status.breath { animation: breath 2.4s ease both; }
+@keyframes breath { 0%,100% { opacity: 0; } 30%,60% { opacity: 1; } }
+.count { color: var(--paper-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .screen, .status.breath { animation: none; }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A daily reflection that stays on your device. One entry a day. You have to be here to write it." />
+  <meta name="theme-color" content="#15171d" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Compendium</title>
+  <link rel="stylesheet" href="css/compendium.css" />
+</head>
+<body>
+  <!-- grain + lamp-glow atmosphere -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ───────────────────────── first run: ask once for a birthdate ───────────────────────── -->
+  <section id="onboarding" class="screen" hidden>
+    <div class="onboarding-inner">
+      <p class="kicker">Before we begin</p>
+      <h1 class="onboarding-title">Compendium keeps a record of how your thinking moves over time.</h1>
+      <p class="onboarding-body">
+        To place each entry against the age you were when you wrote it, it needs one thing: the day you were born.
+        It never leaves this device.
+      </p>
+      <form id="birthdate-form" class="birthdate-form" autocomplete="off" novalidate>
+        <label class="field-label" id="dob-label">Date of birth</label>
+        <div class="dob" role="group" aria-labelledby="dob-label">
+          <input type="text" id="dob-day"   class="dob-field dob-dd"   inputmode="numeric" maxlength="2" placeholder="DD"   aria-label="Day" />
+          <span class="dob-sep" aria-hidden="true">/</span>
+          <input type="text" id="dob-month" class="dob-field dob-mm"   inputmode="numeric" maxlength="2" placeholder="MM"   aria-label="Month" />
+          <span class="dob-sep" aria-hidden="true">/</span>
+          <input type="text" id="dob-year"  class="dob-field dob-yyyy" inputmode="numeric" maxlength="4" placeholder="YYYY" aria-label="Year" />
+        </div>
+        <p class="dob-error" id="dob-error" role="alert" hidden></p>
+        <button type="submit" class="begin-btn">Begin</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── the daily ritual ───────────────────────── -->
+  <main id="ritual" class="screen" hidden>
+    <header class="ritual-head">
+      <p class="dateline">
+        <span id="weekday"></span><span class="dot-sep">·</span><span id="full-date"></span>
+        <span class="age" id="age-line"></span>
+      </p>
+    </header>
+
+    <div class="prompt-wrap">
+      <h1 class="prompt" id="prompt">What's on your mind today?</h1>
+      <textarea
+        id="entry"
+        class="entry"
+        spellcheck="true"
+        aria-label="Today's reflection"
+        placeholder="Write freely. No one is reading this but you."></textarea>
+    </div>
+
+    <footer class="ritual-foot">
+      <span class="status" id="status"></span>
+      <span class="count" id="count"></span>
+    </footer>
+  </main>
+
+  <!-- ───────────────────────── already written today (read-back) ───────────────────────── -->
+  <!-- handled by ritual.js by toggling a class on <main> -->
+
+  <script>
+    // DEV-ONLY reset: visiting /?reset on localhost wipes the local store and
+    // reloads into onboarding. Gated to localhost so it can never fire in prod.
+    (() => {
+      const isLocal = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+      if (isLocal && new URLSearchParams(location.search).has('reset')) {
+        const req = indexedDB.deleteDatabase('compendium');
+        req.onsuccess = req.onerror = req.onblocked = () => {
+          location.replace(location.pathname); // back to a clean URL
+        };
+      }
+    })();
+  </script>
+  <script src="js/db.js"></script>
+  <script src="js/patterns.js"></script>
+  <script src="js/ritual.js"></script>
+  <script>
+    // Register the service worker so the app works offline once installed.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {/* offline-first is best-effort */});
+      });
+    }
+  </script>
+</body>
+</html>
