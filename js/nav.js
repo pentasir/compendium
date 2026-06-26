@@ -1,16 +1,23 @@
 /* ============================================================================
-   nav.js: moves between the three screens after boot.
-     today   <-> archive   (the heatmap)
-     archive  -> reader     (a single past day, read-only)
+   nav.js: moves between screens after boot. The descent:
 
-   ritual.js owns the initial onboarding -> today transition. nav.js only
-   reacts to navigation the writer initiates, toggling the [hidden] attribute
-   (which, per the CSS, genuinely removes a screen from layout and focus order).
+     today  <->  archive (heatmap)
+                   |  click a day-cell
+                   v
+                 thread (that day's month, day by day)
+                   |  click a written day
+                   v
+                 reader (the full entry, read-only)
+
+   ritual.js owns the initial onboarding -> today transition. nav.js owns every
+   transition after that, toggling the [hidden] attribute (which, per the CSS,
+   genuinely removes a screen from layout and focus order). Today is always for
+   writing: a today-cell or today-dot jumps straight to the writing screen.
    ============================================================================ */
 
 (() => {
   const { todayId } = window.CDate;
-  const screens = ['onboarding', 'ritual', 'archive', 'reader']
+  const screens = ['onboarding', 'ritual', 'archive', 'thread', 'reader']
     .map((id) => document.getElementById(id));
 
   function show(id) {
@@ -18,28 +25,45 @@
     window.scrollTo(0, 0);
   }
 
+  const monthOf = (id) => [parseInt(id.slice(0, 4), 10), parseInt(id.slice(5, 7), 10) - 1];
+
   // today <-> archive
   document.getElementById('to-archive').addEventListener('click', async () => {
     await Heatmap.render();
     show('archive');
   });
-  document.getElementById('to-today').addEventListener('click', () => show('ritual'));
-  document.getElementById('reader-back').addEventListener('click', () => show('archive'));
 
-  // click a day in the heatmap
+  // every "Write today" button and the today markers return to writing
+  ['to-today', 'thread-today', 'reader-today'].forEach((id) =>
+    document.getElementById(id).addEventListener('click', () => show('ritual')));
+
+  // archive: click a day-cell -> open its month thread (today -> writing)
   document.getElementById('heatmap').addEventListener('click', async (e) => {
     const cell = e.target.closest('.cell');
     if (!cell) return;
     const date = cell.dataset.date;
+    if (date === todayId()) { show('ritual'); return; }
+    const [y, m] = monthOf(date);
+    await Thread.open(y, m);
+    show('thread');
+  });
 
-    if (date === todayId()) { show('ritual'); return; } // today is for writing
-
+  // thread: back to archive, or click a written day -> reader (today -> writing)
+  document.getElementById('thread-back').addEventListener('click', () => show('archive'));
+  document.getElementById('thread-track').addEventListener('click', async (e) => {
+    const dot = e.target.closest('.tdot');
+    if (!dot) return;
+    const date = dot.dataset.date;
+    if (date === todayId()) { show('ritual'); return; }
     const entry = await DB.getEntry(date);
     if (entry && entry.text && entry.text.trim()) {
       openReader(entry);
       show('reader');
     }
   });
+
+  // reader: back returns to the month thread it was opened from
+  document.getElementById('reader-back').addEventListener('click', () => show('thread'));
 
   function openReader(entry) {
     const d = new Date(entry.id + 'T00:00:00');

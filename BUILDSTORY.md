@@ -64,7 +64,7 @@ And, later, a constellation of recurring themes, unlocking after enough entries.
 |---|---|---|
 | 1 | The writing ritual: setup, today-only entry, autosave, read-back | Built |
 | 2 | The heatmap home, with a read-only reader for any past day | Built |
-| 3 | The thread drilldown (month view) and hover previews | Planned |
+| 3 | The thread drilldown (month view) and hover previews | Built |
 | 4 | Local theme detection surfaced in the UI | Planned (engine present) |
 | 5 | JSON export and import, PWA polish, the calm pass | Planned |
 | Later | Constellation view and the optional AI reflection unlock | Deferred |

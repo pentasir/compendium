@@ -72,7 +72,7 @@
   <section id="archive" class="screen" hidden>
     <nav class="app-nav">
       <span class="wordmark">Compendium</span>
-      <button type="button" class="nav-link" id="to-today">Write today</button>
+      <button type="button" class="nav-link nav-cta" id="to-today">Write today</button>
     </nav>
     <div class="archive-body">
       <p class="kicker archive-kicker">The shape of your years</p>
@@ -85,10 +85,24 @@
     </div>
   </section>
 
+  <!-- ───────────────────────── the thread: one month, day by day ───────────────────────── -->
+  <section id="thread" class="screen" hidden>
+    <nav class="app-nav">
+      <button type="button" class="nav-link" id="thread-back">← The archive</button>
+      <button type="button" class="nav-link nav-cta" id="thread-today">Write today</button>
+    </nav>
+    <div class="thread-body">
+      <h2 class="thread-title" id="thread-title"></h2>
+      <div class="thread-track" id="thread-track"></div>
+      <div class="thread-preview" id="thread-preview"></div>
+    </div>
+  </section>
+
   <!-- ───────────────────────── reading a single past day ───────────────────────── -->
   <section id="reader" class="screen" hidden>
     <nav class="app-nav">
-      <button type="button" class="nav-link" id="reader-back">← The archive</button>
+      <button type="button" class="nav-link" id="reader-back">← Back</button>
+      <button type="button" class="nav-link nav-cta" id="reader-today">Write today</button>
     </nav>
     <article class="reader-body">
       <p class="dateline">
@@ -116,6 +130,7 @@
   <script src="js/db.js"></script>
   <script src="js/patterns.js"></script>
   <script src="js/heatmap.js"></script>
+  <script src="js/thread.js"></script>
   <script src="js/ritual.js"></script>
   <script src="js/nav.js"></script>
   <script>

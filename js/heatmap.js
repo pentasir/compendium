@@ -93,5 +93,5 @@ const Heatmap = (() => {
     }
   }
 
-  return { render };
+  return { render, level };
 })();

@@ -44,7 +44,7 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 
 - [x] **Phase 1: the writing ritual.** First-run setup, today-only entry, autosave, read-back.
 - [x] **Phase 2: the heatmap home.** A year-by-year grid with the age you were down the left, cell intensity by entry length, and a read-only view of any past day.
-- [ ] **Phase 3: the thread drilldown.** Month view as a day-by-day timeline with hover previews.
+- [x] **Phase 3: the thread drilldown.** Clicking a day opens its month as a string of day-beads, with a preview on hover and the full entry on click.
 - [ ] **Phase 4: local pattern detection.** Recurring themes, surfaced from your own words, with no AI.
 - [ ] **Phase 5: polish, backup, deploy.** JSON export and import, PWA install, the calm pass.
 
