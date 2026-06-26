@@ -42,7 +42,7 @@ Your thoughts never leave your device. This is not a policy, it is an architectu
 - No backend. No authentication. No analytics.
 - The code makes zero network requests. You can verify this yourself, which is part of why it is open source.
 - The service worker caches only the app's code for offline use. It never touches your entries.
-- A manual JSON export gives you a backup that you control.
+- A manual Markdown export (one file per day, with frontmatter, readable in Obsidian or any editor) gives you a backup and a way to move your data, entirely under your control.
 
 ## Running it
 
@@ -64,7 +64,8 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 - [x] **Phase 2: the heatmap home.** A year-by-year grid with the age you were down the left, cell intensity by entry length, and a read-only view of any past day.
 - [x] **Phase 3: the thread drilldown.** Clicking a day opens its month as a string of day-beads, with a preview on hover and the full entry on click.
 - [ ] **Phase 4: local pattern detection.** Recurring themes, surfaced from your own words, with no AI.
-- [ ] **Phase 5: polish, backup, deploy.** JSON export and import, PWA install, the calm pass.
+- [x] **Markdown backup.** Export every entry as Obsidian-compatible Markdown (a `.zip` of one file per day) and import it back, merging without overwriting. Local-first, so this is also how you move between devices.
+- [ ] **Phase 5: polish and deploy.** PWA install niceties and a final calm pass.
 
 Deferred: a constellation theme view, and an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on it.
 

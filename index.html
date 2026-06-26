@@ -87,6 +87,18 @@
         <i class="lvl lvl-0"></i><i class="lvl lvl-1"></i><i class="lvl lvl-2"></i><i class="lvl lvl-3"></i><i class="lvl lvl-4"></i>
         <span>Full</span>
       </div>
+
+      <div class="backup">
+        <p class="backup-label">Your data</p>
+        <p class="backup-note">Everything stays on this device. Export a copy as Markdown files, one per day and readable in Obsidian or any editor, to back it up or move it. Import merges files back in without overwriting days you already have.</p>
+        <div class="backup-actions">
+          <button type="button" class="nav-cta" id="export-md">Export Markdown</button>
+          <label class="nav-link backup-import">Import
+            <input type="file" id="import-file" accept=".zip,.md,text/markdown" multiple hidden />
+          </label>
+        </div>
+        <p class="backup-status" id="backup-status"></p>
+      </div>
     </div>
   </section>
 
@@ -138,6 +150,7 @@
   <script src="js/thread.js"></script>
   <script src="js/ritual.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/backup.js"></script>
   <script>
     // Register the service worker so the app works offline once installed.
     if ('serviceWorker' in navigator) {

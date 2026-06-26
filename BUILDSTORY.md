@@ -66,7 +66,8 @@ And, later, a constellation of recurring themes, unlocking after enough entries.
 | 2 | The heatmap home, with a read-only reader for any past day | Built |
 | 3 | The thread drilldown (month view) and hover previews | Built |
 | 4 | Local theme detection surfaced in the UI | Planned (engine present) |
-| 5 | JSON export and import, PWA polish, the calm pass | Planned |
+| Backup | Markdown export and import (Obsidian-compatible), merge without overwrite | Built |
+| 5 | PWA install niceties and the calm pass | Planned |
 | Later | Constellation view and the optional AI reflection unlock | Deferred |
 
 ## What's deliberately not here

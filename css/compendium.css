@@ -307,6 +307,21 @@ body {
 .legend span:first-child { margin-right: 0.3rem; }
 .legend span:last-child { margin-left: 0.3rem; }
 
+/* backup: export/import entries as portable Markdown */
+.backup { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--ink-line); }
+.backup-label {
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ember); margin-bottom: 1rem;
+}
+.backup-note { color: var(--paper-dim); max-width: 34rem; line-height: 1.6; margin-bottom: 1.4rem; }
+.backup-actions { display: flex; align-items: center; gap: 1.6rem; }
+.backup-import { cursor: pointer; }
+.backup-status {
+  margin-top: 1rem; min-height: 1em;
+  font-family: var(--label); font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ember-soft);
+}
+
 /* ── reader: a single past day, read-only ───────────────────────────────────── */
 #reader { justify-content: flex-start; }
 .reader-body { width: 100%; max-width: var(--measure); margin: 2rem auto 0; }
