@@ -52,6 +52,12 @@ const DB = (() => {
       const store = await tx('settings', 'readwrite');
       return reqToPromise(store.put({ key: 'config', ...config }));
     },
+    // merge a partial update into settings without clobbering existing fields
+    async updateSettings(patch) {
+      const current = (await this.getSettings()) || {};
+      const store = await tx('settings', 'readwrite');
+      return reqToPromise(store.put({ ...current, ...patch, key: 'config' }));
+    },
 
     // ── entries ───────────────────────────────────────────────────────────
     async getEntry(id) {

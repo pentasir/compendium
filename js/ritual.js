@@ -20,6 +20,8 @@
   const fullDateEl = document.getElementById('full-date');
   const ageLineEl  = document.getElementById('age-line');
   const form       = document.getElementById('birthdate-form');
+  const tipEl      = document.getElementById('tip');
+  const tipDismiss = document.getElementById('tip-dismiss');
 
   // date + age helpers live in util.js (shared with the heatmap)
   const { todayId, ageOn } = window.CDate;
@@ -145,12 +147,22 @@
       setupBirthdateForm();
       return;
     }
-    startRitual(settings.birthdate);
+    startRitual(settings.birthdate, settings.tipsHidden);
   }
 
-  async function startRitual(birthISO) {
+  function setupTip(tipsHidden) {
+    if (tipsHidden) return;          // permanently dismissed
+    tipEl.hidden = false;
+    tipDismiss.addEventListener('click', async () => {
+      tipEl.hidden = true;
+      await DB.updateSettings({ tipsHidden: true });
+    }, { once: true });
+  }
+
+  async function startRitual(birthISO, tipsHidden) {
     birthdate = birthISO;
     paintDateline(birthISO);
+    setupTip(tipsHidden);
     ritual.hidden = false;
 
     const existing = await DB.getEntry(todayId());

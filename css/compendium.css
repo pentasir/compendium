@@ -150,6 +150,22 @@ body {
 /* once the entry has text, the prompt recedes so the words own the room */
 #ritual.writing .prompt { opacity: 0.28; }
 
+/* a quiet guidance note, like a margin annotation; recedes once you write */
+.tip {
+  border-left: 2px solid var(--ember-soft);
+  padding: 0.1rem 0 0.2rem 1.1rem;
+  margin-bottom: 2rem;
+  transition: opacity 0.8s ease;
+}
+.tip-text { color: var(--paper-dim); font-size: 0.98rem; line-height: 1.6; }
+.tip-dismiss {
+  margin-top: 0.7rem; padding: 0; background: none; border: none; cursor: pointer;
+  font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--paper-faint); transition: color 0.4s ease;
+}
+.tip-dismiss:hover { color: var(--ember); }
+#ritual.writing .tip { opacity: 0.28; }
+
 .entry {
   flex: 1; width: 100%; resize: none; border: none; background: none;
   color: var(--paper); font-family: var(--serif); font-size: 1.18rem; line-height: 1.85;
