@@ -4,6 +4,18 @@
    paper-white text, a single muted ember accent. Calm, unhurried, literary.
    ============================================================================ */
 
+/* Literata: an open-licensed serif designed for immersive reading. Self-hosted
+   (see fonts/, OFL in fonts/OFL.txt) so the literary character holds on every
+   machine, with no network request. */
+@font-face {
+  font-family: 'Literata'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Literata'; font-style: italic; font-weight: 400; font-display: swap;
+  src: url('../fonts/latin-400-italic.woff2') format('woff2');
+}
+
 :root {
   /* ink: never pure black; a warm blue-charcoal, like a dim room */
   --ink:        #15171d;
@@ -20,7 +32,7 @@
   --ember-soft: #8a6238;
 
   /* type */
-  --serif: 'Iowan Old Style', 'Palatino Linotype', 'Palatino', 'Hoefler Text', Georgia, 'Times New Roman', serif;
+  --serif: 'Literata', 'Iowan Old Style', 'Palatino Linotype', 'Palatino', Georgia, 'Times New Roman', serif;
   --label: 'Avenir Next', 'Optima', 'Gill Sans', ui-sans-serif, sans-serif;
 
   --measure: 34rem; /* comfortable reading/writing width */
@@ -294,10 +306,10 @@ body {
 }
 
 .thread-track {
-  display: flex; flex-wrap: wrap; gap: 7px;
-  margin: 2rem 0 2.4rem;
+  display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 2px;
+  margin: 2rem 0 2.4rem; overflow-x: auto;
 }
-.tday { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.tday { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .tdot {
   width: 16px; height: 16px; padding: 0; border: none; border-radius: 50%;
   cursor: default; transition: transform 0.15s ease, box-shadow 0.2s ease;
