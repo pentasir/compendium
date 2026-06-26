@@ -34,17 +34,27 @@ const Patterns = (() => {
     return t ? t.split(/\s+/).length : 0;
   }
 
-  // Frequency of each token across many entries: the raw material for
-  // "you've returned to X N times." (Surfaced in a later phase.)
-  function themeFrequency(entries) {
-    const freq = new Map();
+  // The recurring themes: for each word, the set of days it appeared on. A word
+  // counts once per day, and only words that recur across at least `minDays`
+  // distinct days are returned. This is the raw material for "what you keep
+  // returning to" and for seeing whether your thinking moves or circles.
+  function themeIndex(entries, { minDays = 2, limit = 12 } = {}) {
+    const byWord = new Map(); // word -> Set(dateId)
     for (const e of entries) {
-      for (const tok of new Set(e.tokens || [])) { // count once per day
-        freq.set(tok, (freq.get(tok) || 0) + 1);
+      for (const tok of new Set(e.tokens || [])) {
+        if (!byWord.has(tok)) byWord.set(tok, new Set());
+        byWord.get(tok).add(e.id);
       }
     }
-    return [...freq.entries()].sort((a, b) => b[1] - a[1]);
+    const themes = [];
+    for (const [word, days] of byWord) {
+      if (days.size >= minDays) {
+        themes.push({ word, count: days.size, days: [...days].sort() });
+      }
+    }
+    themes.sort((a, b) => b.count - a.count || (a.word < b.word ? -1 : 1));
+    return themes.slice(0, limit);
   }
 
-  return { tokenize, wordCount, themeFrequency };
+  return { tokenize, wordCount, themeIndex };
 })();

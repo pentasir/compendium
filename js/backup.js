@@ -162,6 +162,7 @@ const Backup = (() => {
     }
     status(`Imported ${imported}, kept ${skipped} already on this device.`);
     if (typeof Heatmap !== 'undefined') await Heatmap.render();
+    if (typeof Themes !== 'undefined') await Themes.render();
   }
 
   // ── wire the controls ─────────────────────────────────────────────────────

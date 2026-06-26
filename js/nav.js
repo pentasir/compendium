@@ -30,6 +30,7 @@
   // today <-> archive
   document.getElementById('to-archive').addEventListener('click', async () => {
     await Heatmap.render();
+    await Themes.render();
     show('archive');
   });
 
