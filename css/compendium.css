@@ -22,10 +22,11 @@
   --ink-soft:   #1c1f27;
   --ink-line:   #2a2e38;
 
-  /* paper: warm off-white, deliberately below max contrast so it never glares */
-  --paper:      #e7e2d6;
-  --paper-dim:  #9a958a;
-  --paper-faint:#5f5d57;
+  /* paper: warm off-white, legible on ink but a touch below pure white so it
+     never glares. Secondary tones lifted so labels and dates stay readable. */
+  --paper:      #f1ece2;
+  --paper-dim:  #b4ae9f;
+  --paper-faint:#857f73;
 
   /* ember: the one accent. the "today" marker, the cursor, the saved-breath. */
   --ember:      #c98a4b;
@@ -164,6 +165,11 @@ body {
 }
 .dot-sep { color: var(--ink-line); }
 .age { margin-left: auto; color: var(--ember-soft); }
+.ritual-note {
+  margin-top: 0.6rem;
+  font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
 
 .prompt-wrap {
   max-width: var(--measure); margin: 0 auto; width: 100%;

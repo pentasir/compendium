@@ -9,7 +9,7 @@
    transmitted, or cached by this worker.
    ============================================================================ */
 
-const CACHE = 'compendium-v7';
+const CACHE = 'compendium-v8';
 const SHELL = [
   './',
   './index.html',
