@@ -193,6 +193,21 @@ body {
 }
 .nav-link:hover { color: var(--ember); }
 
+/* "Write today" is the primary action on the archive screen: a clear,
+   tappable button rather than a faint text link */
+#to-today {
+  color: var(--ember);
+  border: 1px solid var(--ember-soft);
+  border-radius: 2px;
+  padding: 0.55rem 1.25rem;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+#to-today:hover {
+  background: var(--ember);
+  border-color: var(--ember);
+  color: var(--ink);
+}
+
 /* ── the archive: heatmap of a writing life ─────────────────────────────────── */
 #archive { justify-content: flex-start; overflow: auto; }
 #archive .app-nav { max-width: 64rem; }
