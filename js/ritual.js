@@ -28,6 +28,8 @@
   const sealConfirm = document.getElementById('seal-confirm');
   const sealDo      = document.getElementById('seal-do');
   const sealCancel  = document.getElementById('seal-cancel');
+  const sealedNote  = document.getElementById('sealed-note');
+  const sealedCount = document.getElementById('sealed-count');
 
   // date + age helpers live in util.js (shared with the heatmap)
   const { todayId, ageOn } = window.CDate;
@@ -77,7 +79,6 @@
     ritual.classList.toggle('writing', has);
     const c = Patterns.wordCount(entryEl.value);
     countEl.textContent = c ? `${c} ${c === 1 ? 'word' : 'words'}` : '';
-    updateNote(has || sealed);
     if (sealRow) sealRow.hidden = !(has && !sealed); // offer to seal once written
   }
 
@@ -94,8 +95,10 @@
     entryEl.readOnly = true;
     ritual.classList.add('done');
     if (sealRow) sealRow.hidden = true;
-    statusEl.textContent = 'Sealed for today';
-    updateNote(true);
+    if (noteEl) noteEl.hidden = true;        // the faint header rule steps aside
+    statusEl.textContent = '';
+    sealedNote.hidden = false;               // the countdown takes presence near the entry
+    updateCountdown();
   }
 
   function setupSeal() {
@@ -105,14 +108,9 @@
     sealDo.addEventListener('click', sealToday);
   }
 
-  // before writing, state the rule; once today has content, count down to
-  // midnight, when the next day's entry unlocks
-  function updateNote(hasContent) {
-    if (!noteEl) return;
-    if (!hasContent) {
-      noteEl.textContent = 'One entry a day, written the day it happens.';
-      return;
-    }
+  // once sealed, count down to local midnight, when the next day's entry unlocks
+  function updateCountdown() {
+    if (!sealedCount) return;
     const now = new Date();
     const midnight = new Date(now);
     midnight.setHours(24, 0, 0, 0);
@@ -120,7 +118,7 @@
     const h = Math.floor(ms / 3600000);
     const m = Math.floor((ms % 3600000) / 60000);
     const left = h > 0 ? `${h}h ${m}m` : `${m}m`;
-    noteEl.textContent = `Your next entry unlocks at midnight, in ${left}.`;
+    sealedCount.innerHTML = `Your next entry unlocks at midnight, <span class="sealed-time">in ${left}</span>.`;
   }
 
   // ── birthdate entry: three typed fields, no calendar to scroll ──────────────
@@ -234,8 +232,8 @@
       entryEl.focus();
     }
     window.addEventListener('beforeunload', () => { if (saveTimer) save(); });
-    // keep the countdown live while the writing screen is open
-    setInterval(() => updateNote(sealed || entryEl.value.trim().length > 0), 60000);
+    // keep the countdown live once sealed
+    setInterval(() => { if (sealed) updateCountdown(); }, 60000);
   }
 
   boot();

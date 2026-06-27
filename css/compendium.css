@@ -207,6 +207,15 @@ body {
   text-transform: uppercase; color: var(--paper-faint);
 }
 
+/* the sealed state: the countdown sits near the entry with real presence */
+.sealed-note { margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--ink-line); }
+.sealed-tag {
+  font-family: var(--label); font-size: 0.64rem; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--ember); margin-bottom: 0.6rem;
+}
+.sealed-count { font-family: var(--serif); font-size: 1.18rem; color: var(--paper-dim); }
+.sealed-time { color: var(--ember); }
+
 .entry {
   flex: 1; width: 100%; resize: none; border: none; background: none;
   color: var(--paper); font-family: var(--serif); font-size: 1.18rem; line-height: 1.85;
