@@ -199,6 +199,14 @@ body {
 .tip-dismiss:hover { color: var(--ember); }
 #ritual.writing .tip { opacity: 0.28; }
 
+/* sealing: the deliberate "done for today" that locks the entry */
+.seal-row { margin-top: 1.6rem; display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.seal-confirm { display: inline-flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.seal-warn {
+  font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+
 .entry {
   flex: 1; width: 100%; resize: none; border: none; background: none;
   color: var(--paper); font-family: var(--serif); font-size: 1.18rem; line-height: 1.85;

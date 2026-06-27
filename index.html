@@ -65,6 +65,14 @@
         spellcheck="true"
         aria-label="Today's reflection"
         placeholder="Write freely. No one is reading this but you."></textarea>
+      <div class="seal-row" id="seal-row" hidden>
+        <button type="button" class="btn-secondary" id="seal-start">Done for today</button>
+        <span class="seal-confirm" id="seal-confirm" hidden>
+          <span class="seal-warn">This locks today's entry until midnight.</span>
+          <button type="button" class="btn-primary" id="seal-do">Seal it</button>
+          <button type="button" class="nav-link" id="seal-cancel">Not yet</button>
+        </span>
+      </div>
     </div>
 
     <footer class="ritual-foot">

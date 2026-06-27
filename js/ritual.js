@@ -23,6 +23,11 @@
   const tipEl      = document.getElementById('tip');
   const tipDismiss = document.getElementById('tip-dismiss');
   const noteEl     = document.querySelector('.ritual-note');
+  const sealRow     = document.getElementById('seal-row');
+  const sealStart   = document.getElementById('seal-start');
+  const sealConfirm = document.getElementById('seal-confirm');
+  const sealDo      = document.getElementById('seal-do');
+  const sealCancel  = document.getElementById('seal-cancel');
 
   // date + age helpers live in util.js (shared with the heatmap)
   const { todayId, ageOn } = window.CDate;
@@ -37,6 +42,7 @@
   // ── autosave ──────────────────────────────────────────────────────────────
   let saveTimer = null;
   let birthdate = null;
+  let sealed = false; // once sealed, today's entry is locked until midnight
 
   function scheduleSave() {
     clearTimeout(saveTimer);
@@ -53,9 +59,10 @@
       text,
       wordCount: Patterns.wordCount(text),
       tokens: Patterns.tokenize(text),
+      sealed,
     };
     await DB.putEntry(entry);
-    breathe('Saved');
+    if (!sealed) breathe('Saved');
   }
 
   function breathe(msg) {
@@ -70,7 +77,32 @@
     ritual.classList.toggle('writing', has);
     const c = Patterns.wordCount(entryEl.value);
     countEl.textContent = c ? `${c} ${c === 1 ? 'word' : 'words'}` : '';
-    updateNote(has);
+    updateNote(has || sealed);
+    if (sealRow) sealRow.hidden = !(has && !sealed); // offer to seal once written
+  }
+
+  // ── sealing: a deliberate "done for today" that locks the entry ─────────────
+  async function sealToday() {
+    if (sealed || !entryEl.value.trim()) return;
+    sealed = true;
+    if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
+    await save();
+    lockUI();
+  }
+
+  function lockUI() {
+    entryEl.readOnly = true;
+    ritual.classList.add('done');
+    if (sealRow) sealRow.hidden = true;
+    statusEl.textContent = 'Sealed for today';
+    updateNote(true);
+  }
+
+  function setupSeal() {
+    if (!sealStart) return;
+    sealStart.addEventListener('click', () => { sealStart.hidden = true; sealConfirm.hidden = false; });
+    sealCancel.addEventListener('click', () => { sealConfirm.hidden = true; sealStart.hidden = false; });
+    sealDo.addEventListener('click', sealToday);
   }
 
   // before writing, state the rule; once today has content, count down to
@@ -188,18 +220,22 @@
     const existing = await DB.getEntry(todayId());
     if (existing) {
       entryEl.value = existing.text;
+      sealed = !!existing.sealed;
     }
     reflectState();
 
-    // Today is always editable until it stops being today. (A future midnight
-    // check / past-day routing closes the window; the data already supports it
-    // because every entry is keyed and timestamped by date.)
-    entryEl.addEventListener('input', () => { reflectState(); scheduleSave(); });
+    if (sealed) {
+      // already sealed today: locked until midnight
+      lockUI();
+    } else {
+      // editable until you seal it (or the day ends)
+      entryEl.addEventListener('input', () => { reflectState(); scheduleSave(); });
+      setupSeal();
+      entryEl.focus();
+    }
     window.addEventListener('beforeunload', () => { if (saveTimer) save(); });
     // keep the countdown live while the writing screen is open
-    setInterval(() => updateNote(entryEl.value.trim().length > 0), 60000);
-
-    entryEl.focus();
+    setInterval(() => updateNote(sealed || entryEl.value.trim().length > 0), 60000);
   }
 
   boot();
