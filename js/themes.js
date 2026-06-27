@@ -44,7 +44,7 @@ const Themes = (() => {
 
     if (written.length === 0) { host.innerHTML = ''; themes = []; return; }
 
-    themes = Patterns.themeIndex(written, { minDays: 2, limit: 12 });
+    themes = Patterns.themeIndex(written, { minDays: 2, limit: 24 });
     if (themes.length === 0) {
       host.innerHTML =
         '<p class="themes-label">What you keep returning to</p>' +
@@ -52,12 +52,21 @@ const Themes = (() => {
       return;
     }
 
+    // size encodes recurrence: the words you return to most grow largest, so the
+    // list stays scannable however many words gather over time
+    const max = themes[0].count;            // themes are sorted by count desc
+    const min = themes[themes.length - 1].count;
+    const sizeFor = (c) => {
+      if (max === min) return 1.25;
+      return (1.0 + ((c - min) / (max - min)) * 0.85).toFixed(2); // 1.0rem .. 1.85rem
+    };
+
     host.innerHTML =
       '<p class="themes-label">What you keep returning to</p>' +
-      '<div class="theme-list">' +
+      '<div class="theme-cloud">' +
       themes.map((t) =>
-        `<button type="button" class="theme" data-word="${t.word}">` +
-        `${t.word}<span class="theme-count">${t.count}</span></button>`).join('') +
+        `<button type="button" class="theme" data-word="${t.word}" ` +
+        `style="font-size:${sizeFor(t.count)}rem" title="${t.count} days">${t.word}</button>`).join('') +
       '</div>';
   }
 

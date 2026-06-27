@@ -275,25 +275,19 @@ body {
   text-transform: uppercase; color: var(--ember); margin-bottom: 1.2rem;
 }
 .themes-hint { color: var(--paper-dim); font-style: italic; max-width: 32rem; line-height: 1.6; }
-.theme-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+/* a weighted word list: size encodes recurrence, so it scales to many words
+   and the dominant themes stand out. Calm typography, not boxed chips. */
+.theme-cloud {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 0.5rem 1.3rem; max-width: 42rem;
+}
 .theme {
-  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
-  background: var(--ink-soft); border: 1px solid var(--ink-line); border-radius: 2px;
-  color: var(--paper-dim); font-family: var(--serif); font-size: 1rem;
-  padding: 0.35rem 0.8rem;
-  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: var(--serif); color: var(--paper-dim); line-height: 1.5;
+  transition: color 0.25s ease;
 }
-.theme:hover { color: var(--paper); border-color: var(--ember-soft); }
-.theme.active { color: var(--ink); background: var(--ember); border-color: var(--ember); }
-.theme-count {
-  font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.06em;
-  color: var(--paper-faint);
-}
-.theme.active .theme-count { color: var(--ink); }
-.themes-status {
-  margin-top: 1.1rem; min-height: 1em;
-  font-family: var(--serif); font-style: italic; color: var(--ember-soft);
-}
+.theme:hover { color: var(--ember); }
 
 /* ── theme view: every day you wrote about one theme ────────────────────────── */
 #theme-view { justify-content: flex-start; }
