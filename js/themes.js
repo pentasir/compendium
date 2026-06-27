@@ -52,21 +52,19 @@ const Themes = (() => {
       return;
     }
 
-    // size encodes recurrence: the words you return to most grow largest, so the
-    // list stays scannable however many words gather over time
-    const max = themes[0].count;            // themes are sorted by count desc
-    const min = themes[themes.length - 1].count;
-    const sizeFor = (c) => {
-      if (max === min) return 1.25;
-      return (1.0 + ((c - min) / (max - min)) * 0.85).toFixed(2); // 1.0rem .. 1.85rem
-    };
-
+    // a ranked bar per theme; bar width encodes the number of days, so it stays
+    // scannable and scales down the list however many words gather over time
+    const max = themes[0].count; // themes are sorted by count desc
     host.innerHTML =
       '<p class="themes-label">What you keep returning to</p>' +
-      '<div class="theme-cloud">' +
-      themes.map((t) =>
-        `<button type="button" class="theme" data-word="${t.word}" ` +
-        `style="font-size:${sizeFor(t.count)}rem" title="${t.count} days">${t.word}</button>`).join('') +
+      '<div class="theme-bars">' +
+      themes.map((t) => {
+        const pct = Math.round((t.count / max) * 100);
+        return `<button type="button" class="theme" data-word="${t.word}">` +
+          `<span class="tb-word">${t.word}</span>` +
+          `<span class="tb-track"><span class="tb-fill" style="width:${pct}%"></span></span>` +
+          `<span class="tb-count">${t.count} ${t.count === 1 ? 'day' : 'days'}</span></button>`;
+      }).join('') +
       '</div>';
   }
 

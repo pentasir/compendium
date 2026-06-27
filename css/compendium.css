@@ -276,18 +276,30 @@ body {
 }
 .themes-hint { color: var(--paper-dim); font-style: italic; max-width: 32rem; line-height: 1.6; }
 
-/* a weighted word list: size encodes recurrence, so it scales to many words
-   and the dominant themes stand out. Calm typography, not boxed chips. */
-.theme-cloud {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  gap: 0.5rem 1.3rem; max-width: 42rem;
-}
+/* ranked magnitude bars: width encodes the number of days, scales down the
+   list, and stays scannable however many words gather. Click a row to read. */
+.theme-bars { display: flex; flex-direction: column; gap: 0.55rem; max-width: 38rem; }
 .theme {
-  background: none; border: none; padding: 0; cursor: pointer;
-  font-family: var(--serif); color: var(--paper-dim); line-height: 1.5;
+  display: grid; grid-template-columns: minmax(5.5rem, 10rem) 1fr auto;
+  align-items: center; gap: 1.1rem; width: 100%; text-align: left;
+  background: none; border: none; padding: 0.35rem 0; cursor: pointer;
+}
+.tb-word {
+  font-family: var(--serif); font-size: 1.05rem; color: var(--paper-dim);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   transition: color 0.25s ease;
 }
-.theme:hover { color: var(--ember); }
+.theme:hover .tb-word { color: var(--ember); }
+.tb-track { height: 8px; background: var(--ink-soft); border-radius: 2px; overflow: hidden; }
+.tb-fill {
+  display: block; height: 100%; background: var(--ember-soft); border-radius: 2px;
+  transition: background 0.25s ease;
+}
+.theme:hover .tb-fill { background: var(--ember); }
+.tb-count {
+  font-family: var(--label); font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--paper-faint); white-space: nowrap;
+}
 
 /* ── theme view: every day you wrote about one theme ────────────────────────── */
 #theme-view { justify-content: flex-start; }
