@@ -204,11 +204,18 @@
   <script src="js/backup.js"></script>
   <script src="js/themes.js"></script>
   <script>
-    // Register the service worker so the app works offline once installed.
+    // The service worker is for the web PWA (offline). In the desktop app it is
+    // pointless and only causes stale-asset bugs, so skip it there and clean up
+    // any worker or cache left behind by a previous build.
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {/* offline-first is best-effort */});
-      });
+      if (window.__TAURI__) {
+        navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()));
+        if (window.caches) caches.keys().then((ks) => ks.forEach((k) => caches.delete(k)));
+      } else {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js').catch(() => {/* best-effort */});
+        });
+      }
     }
   </script>
 </body>
