@@ -12,7 +12,7 @@ It is local-first by design. There is no account, no server, and no network call
 
 ## A look inside
 
-**The daily ritual.** One free-form entry a day, with a quiet prompt and an optional guidance note.
+**The daily ritual.** One free-form entry a day, with a quiet prompt and a guidance note, then a deliberate "Done for today" that seals the entry until midnight.
 
 ![The writing screen](docs/writing.png)
 
