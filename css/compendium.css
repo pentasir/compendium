@@ -241,10 +241,12 @@ body {
   text-transform: uppercase; color: var(--paper-faint); transition: color 0.4s ease;
 }
 .nav-link:hover { color: var(--ember); }
+.nav-group { display: flex; align-items: center; gap: 1.4rem; }
 
 /* "Write today" is a primary action: a clear, tappable button rather than a
    faint text link. Shared by the archive, thread, and reader screens. */
 .nav-cta {
+  background: transparent; /* explicit, or buttons inherit the OS grey fill */
   color: var(--ember);
   border: 1px solid var(--ember-soft);
   border-radius: 2px;
@@ -338,20 +340,40 @@ body {
 .legend span:first-child { margin-right: 0.3rem; }
 .legend span:last-child { margin-left: 0.3rem; }
 
-/* backup: export/import entries as portable Markdown */
-.backup { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--ink-line); }
-.backup-label {
-  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--ember); margin-bottom: 1rem;
+/* ── settings ───────────────────────────────────────────────────────────────── */
+#settings { justify-content: flex-start; }
+.settings-body { width: 100%; max-width: var(--measure); margin: 1.5rem auto 0; }
+.setting-block { margin-top: 1.5rem; }
+.setting-label {
+  font-family: var(--serif); font-weight: 400; font-size: 1.35rem; color: var(--paper);
+  margin-bottom: 0.8rem;
 }
-.backup-note { color: var(--paper-dim); max-width: 34rem; line-height: 1.6; margin-bottom: 1.4rem; }
-.backup-actions { display: flex; align-items: center; gap: 1.6rem; }
-.backup-import { cursor: pointer; }
+.setting-note { color: var(--paper-dim); max-width: 34rem; line-height: 1.7; margin-bottom: 1.6rem; }
+
+/* export/import controls (live in settings) */
+.backup-actions { display: flex; align-items: center; gap: 1.2rem; }
+.backup-import { cursor: pointer; display: inline-flex; align-items: center; }
 .backup-status {
-  margin-top: 1rem; min-height: 1em;
+  margin-top: 1.2rem; min-height: 1em;
   font-family: var(--label); font-size: 0.68rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--ember-soft);
 }
+
+/* buttons: a filled primary (high contrast) and an outline secondary */
+.btn-primary {
+  background: var(--ember); color: var(--ink); border: 1px solid var(--ember);
+  font-family: var(--label); font-size: 0.74rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.62rem 1.4rem; border-radius: 2px; cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.btn-primary:hover { background: var(--ember-soft); border-color: var(--ember-soft); }
+.btn-secondary {
+  background: transparent; color: var(--paper-dim); border: 1px solid var(--ink-line);
+  font-family: var(--label); font-size: 0.74rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.62rem 1.4rem; border-radius: 2px; cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.btn-secondary:hover { color: var(--paper); border-color: var(--ember-soft); }
 
 /* ── reader: a single past day, read-only ───────────────────────────────────── */
 #reader { justify-content: flex-start; }

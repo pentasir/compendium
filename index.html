@@ -77,7 +77,10 @@
   <section id="archive" class="screen" hidden>
     <nav class="app-nav">
       <span class="wordmark">Compendium</span>
-      <button type="button" class="nav-link nav-cta" id="to-today">Write today</button>
+      <span class="nav-group">
+        <button type="button" class="nav-link to-settings">Settings</button>
+        <button type="button" class="nav-link nav-cta" id="to-today">Write today</button>
+      </span>
     </nav>
     <div class="archive-body">
       <div id="themes" class="themes"></div>
@@ -89,17 +92,6 @@
         <span>Full</span>
       </div>
 
-      <div class="backup">
-        <p class="backup-label">Your data</p>
-        <p class="backup-note">Everything stays on this device. Export a copy as Markdown files, one per day and readable in Obsidian or any editor, to back it up or move it. Import merges files back in without overwriting days you already have.</p>
-        <div class="backup-actions">
-          <button type="button" class="nav-cta" id="export-md">Export Markdown</button>
-          <label class="nav-link backup-import">Import
-            <input type="file" id="import-file" accept=".zip,.md,text/markdown" multiple hidden />
-          </label>
-        </div>
-        <p class="backup-status" id="backup-status"></p>
-      </div>
     </div>
   </section>
 
@@ -129,6 +121,28 @@
       </p>
       <div class="reader-text" id="reader-text"></div>
     </article>
+  </section>
+
+  <!-- ───────────────────────── settings ───────────────────────── -->
+  <section id="settings" class="screen" hidden>
+    <nav class="app-nav">
+      <button type="button" class="nav-link" id="settings-back">← The archive</button>
+      <button type="button" class="nav-link nav-cta" id="settings-today">Write today</button>
+    </nav>
+    <div class="settings-body">
+      <p class="kicker">Settings</p>
+      <div class="setting-block">
+        <h2 class="setting-label">Your data</h2>
+        <p class="setting-note">Everything stays on this device. Export a copy as Markdown files, one per day and readable in Obsidian or any editor, to back it up or move it. Import merges files back in without overwriting days you already have.</p>
+        <div class="backup-actions">
+          <button type="button" class="btn-primary" id="export-md">Export Markdown</button>
+          <label class="btn-secondary backup-import">Import
+            <input type="file" id="import-file" accept=".zip,.md,text/markdown" multiple hidden />
+          </label>
+        </div>
+        <p class="backup-status" id="backup-status"></p>
+      </div>
+    </div>
   </section>
 
   <script>

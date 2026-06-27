@@ -17,7 +17,7 @@
 
 (() => {
   const { todayId } = window.CDate;
-  const screens = ['onboarding', 'ritual', 'archive', 'thread', 'reader']
+  const screens = ['onboarding', 'ritual', 'archive', 'thread', 'reader', 'settings']
     .map((id) => document.getElementById(id));
 
   function show(id) {
@@ -35,8 +35,13 @@
   });
 
   // every "Write today" button and the today markers return to writing
-  ['to-today', 'thread-today', 'reader-today'].forEach((id) =>
+  ['to-today', 'thread-today', 'reader-today', 'settings-today'].forEach((id) =>
     document.getElementById(id).addEventListener('click', () => show('ritual')));
+
+  // settings (reached from the archive nav)
+  document.querySelectorAll('.to-settings').forEach((el) =>
+    el.addEventListener('click', () => show('settings')));
+  document.getElementById('settings-back').addEventListener('click', () => show('archive'));
 
   // archive: click a day-cell -> open its month thread (today -> writing)
   document.getElementById('heatmap').addEventListener('click', async (e) => {
@@ -71,6 +76,7 @@
     if (e.key !== 'Escape') return;
     const vis = (id) => !document.getElementById(id).hidden;
     if (vis('reader')) show('thread');
+    else if (vis('settings')) show('archive');
     else if (vis('thread')) show('archive');
     else if (vis('archive')) show('ritual');
     // on today / onboarding there is nowhere further back
