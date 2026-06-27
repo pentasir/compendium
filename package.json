@@ -1,0 +1,12 @@
+{
+  "name": "compendium",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Desktop build tooling for Compendium. The web app itself has no build step; this is only the Tauri wrapper.",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

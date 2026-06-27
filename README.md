@@ -60,6 +60,20 @@ python3 -m http.server 8000
 
 To install it as an app, open it in a browser and choose "Install" or "Add to Home Screen." It then works fully offline.
 
+## Desktop app
+
+Compendium also builds as a native desktop app with [Tauri](https://tauri.app), which wraps the exact same code in the operating system's own webview (no bundled Chromium, so the installer is only a few megabytes). The web app at the repo root is untouched and still has no build step; the desktop tooling lives in `src-tauri/`, and a generated, gitignored `dist/` holds a clean copy of the app shell for bundling.
+
+Prerequisites: [Rust](https://rustup.rs) and Node. Then:
+
+```sh
+npm install
+npm run tauri build
+# produces Compendium.app and a .dmg under src-tauri/target/release/bundle/
+```
+
+The build is unsigned, so on another Mac the first launch needs a right-click then "Open."
+
 ## Status
 
 Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and rationale.
@@ -75,7 +89,7 @@ Deferred: a constellation theme view, and an optional AI reflection layer (a one
 
 ## Stack
 
-Vanilla HTML, CSS, and JavaScript. IndexedDB for storage. PWA for offline and install. No framework, no build step, no dependencies.
+Vanilla HTML, CSS, and JavaScript. IndexedDB for storage. PWA for offline and install. No framework, no build step, no dependencies. A Tauri (Rust) wrapper builds the same code as a native desktop app; that is the only part with a toolchain, and it does not touch the web build.
 
 ## License
 
