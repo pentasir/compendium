@@ -1,6 +1,6 @@
 [package]
 name = "compendium"
-version = "0.5.0"
+version = "0.6.0"
 description = "A daily reflection that stays on your device."
 authors = ["Jason K. Don / PENTASIR"]
 edition = "2021"
