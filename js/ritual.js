@@ -22,6 +22,7 @@
   const form       = document.getElementById('birthdate-form');
   const tipEl      = document.getElementById('tip');
   const tipDismiss = document.getElementById('tip-dismiss');
+  const noteEl     = document.querySelector('.ritual-note');
 
   // date + age helpers live in util.js (shared with the heatmap)
   const { todayId, ageOn } = window.CDate;
@@ -69,6 +70,25 @@
     ritual.classList.toggle('writing', has);
     const c = Patterns.wordCount(entryEl.value);
     countEl.textContent = c ? `${c} ${c === 1 ? 'word' : 'words'}` : '';
+    updateNote(has);
+  }
+
+  // before writing, state the rule; once today has content, count down to
+  // midnight, when the next day's entry unlocks
+  function updateNote(hasContent) {
+    if (!noteEl) return;
+    if (!hasContent) {
+      noteEl.textContent = 'One entry a day, written the day it happens.';
+      return;
+    }
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    const ms = midnight - now;
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const left = h > 0 ? `${h}h ${m}m` : `${m}m`;
+    noteEl.textContent = `Your next entry unlocks at midnight, in ${left}.`;
   }
 
   // ── birthdate entry: three typed fields, no calendar to scroll ──────────────
@@ -176,6 +196,8 @@
     // because every entry is keyed and timestamped by date.)
     entryEl.addEventListener('input', () => { reflectState(); scheduleSave(); });
     window.addEventListener('beforeunload', () => { if (saveTimer) save(); });
+    // keep the countdown live while the writing screen is open
+    setInterval(() => updateNote(entryEl.value.trim().length > 0), 60000);
 
     entryEl.focus();
   }
