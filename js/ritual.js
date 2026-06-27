@@ -190,8 +190,20 @@
 
   // ── boot ────────────────────────────────────────────────────────────────────
   async function boot() {
-    const settings = await DB.getSettings();
+    // desktop: make sure a vault folder is chosen before touching storage
+    if (DB.isTauri && await DB.needsVault()) {
+      const vaultSetup = document.getElementById('vault-setup');
+      vaultSetup.hidden = false;
+      document.getElementById('pick-vault').addEventListener('click', async () => {
+        if (await DB.pickVault()) { vaultSetup.hidden = true; afterStorageReady(); }
+      });
+      return;
+    }
+    afterStorageReady();
+  }
 
+  async function afterStorageReady() {
+    const settings = await DB.getSettings();
     if (!settings || !settings.birthdate) {
       onboarding.hidden = false;
       setupBirthdateForm();

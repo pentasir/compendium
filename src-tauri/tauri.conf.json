@@ -8,6 +8,7 @@
     "beforeBuildCommand": "bash sync-frontend.sh"
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "label": "main",

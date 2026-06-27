@@ -99,7 +99,7 @@ body {
 }
 
 /* ── onboarding ──────────────────────────────────────────────────────────── */
-#onboarding { justify-content: center; }
+#onboarding, #vault-setup { justify-content: center; }
 .onboarding-inner { max-width: var(--measure); margin: 0 auto; text-align: center; }
 .kicker {
   font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.22em;
