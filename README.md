@@ -1,5 +1,7 @@
 # Compendium
 
+![license MIT](https://img.shields.io/badge/license-MIT-c98a4b) ![data stays on your device](https://img.shields.io/badge/data-stays%20on%20your%20device-3fb950) ![network requests zero](https://img.shields.io/badge/network%20requests-zero-3fb950) ![account none](https://img.shields.io/badge/account-none-3fb950) ![runs web and desktop](https://img.shields.io/badge/runs-web%20%2B%20desktop-58a6ff)
+
 A daily reflection that stays on your device. One entry a day. You have to be here to write it.
 
 Most journaling apps are write-only. You put thoughts in and nothing comes back. Compendium is built on a different premise: most of what we think today is a recurrence of yesterday. So instead of a feed of notes, it keeps a record of *how your thinking moves over time*, and quietly shows you the loops you didn't know you were in.
@@ -63,6 +65,10 @@ To install it as an app, open it in a browser and choose "Install" or "Add to Ho
 ## Desktop app
 
 Compendium also builds as a native desktop app with [Tauri](https://tauri.app), which wraps the exact same code in the operating system's own webview (no bundled Chromium, so the installer is only a few megabytes). The web app at the repo root is untouched and still has no build step; the desktop tooling lives in `src-tauri/`, and a generated, gitignored `dist/` holds a clean copy of the app shell for bundling.
+
+On the desktop, each day is stored as a real Markdown file in a folder you choose (your vault), readable in Obsidian or any editor. The web version keeps IndexedDB; the same code picks its storage backend at runtime.
+
+![Compendium running as a native macOS app](docs/desktop.png)
 
 Prerequisites: [Rust](https://rustup.rs) and Node. Then:
 
