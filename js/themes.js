@@ -1,30 +1,50 @@
 /* ============================================================================
-   themes.js: "what you keep returning to". This is the heart of the premise.
+   themes.js: "what you keep returning to". The heart of the premise.
 
-   It reads the recurring words across your entries (computed locally, no AI),
-   lists them on the archive, and lets you click one to light up every day it
-   appears on across your heatmap, so a loop in your thinking becomes visible.
+   The archive lists the words that recur across your entries (computed locally,
+   no AI). Clicking one opens a focused view of every day you wrote about it,
+   each with a snippet showing the word in context; clicking an entry reads the
+   full day. So a theme takes you straight to what you actually said, not just
+   to where on the calendar it lives.
 
-   Tokens come from patterns.js and are lowercase letters only, so they are safe
-   to place in markup without escaping.
+   Tokens come from patterns.js and are lowercase letters only, safe in markup.
    ============================================================================ */
 
 const Themes = (() => {
-  function clearHighlight(heatmap, list, status) {
-    list.querySelectorAll('.theme').forEach((b) => b.classList.remove('active'));
-    heatmap.querySelectorAll('.cell.is-marked').forEach((c) => c.classList.remove('is-marked'));
-    heatmap.classList.remove('filtered');
-    if (status) status.textContent = '';
+  let themes = [];
+  let entriesById = new Map();
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  // a window of text around the first mention of the word, with every
+  // occurrence emphasised
+  function snippet(text, word) {
+    const clean = text.replace(/\s+/g, ' ').trim();
+    const i = clean.toLowerCase().indexOf(word);
+    let s, lead = false, trail = false;
+    if (i < 0) {
+      s = clean.slice(0, 150); trail = clean.length > 150;
+    } else {
+      const start = Math.max(0, i - 70);
+      const end = Math.min(clean.length, i + word.length + 90);
+      s = clean.slice(start, end); lead = start > 0; trail = end < clean.length;
+    }
+    const re = new RegExp('(' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    const html = escapeHtml(s).replace(re, '<mark>$1</mark>');
+    return (lead ? '… ' : '') + html + (trail ? ' …' : '');
   }
 
   async function render() {
     const host = document.getElementById('themes');
     const written = (await DB.allEntries()).filter((e) => e.text && e.text.trim());
+    entriesById = new Map(written.map((e) => [e.id, e]));
 
-    // nothing written yet: let the heatmap's empty state speak instead
-    if (written.length === 0) { host.innerHTML = ''; return; }
+    if (written.length === 0) { host.innerHTML = ''; themes = []; return; }
 
-    const themes = Patterns.themeIndex(written, { minDays: 2, limit: 12 });
+    themes = Patterns.themeIndex(written, { minDays: 2, limit: 12 });
     if (themes.length === 0) {
       host.innerHTML =
         '<p class="themes-label">What you keep returning to</p>' +
@@ -38,31 +58,32 @@ const Themes = (() => {
       themes.map((t) =>
         `<button type="button" class="theme" data-word="${t.word}">` +
         `${t.word}<span class="theme-count">${t.count}</span></button>`).join('') +
-      '</div>' +
-      '<p class="themes-status" id="themes-status"></p>';
-
-    const heatmap = document.getElementById('heatmap');
-    const list = host.querySelector('.theme-list');
-    const status = document.getElementById('themes-status');
-
-    list.addEventListener('click', (e) => {
-      const btn = e.target.closest('.theme');
-      if (!btn) return;
-      const active = btn.classList.contains('active');
-      clearHighlight(heatmap, list, status); // selecting is single-choice; re-clicking clears
-      if (active) return;
-
-      btn.classList.add('active');
-      const theme = themes.find((t) => t.word === btn.dataset.word);
-      const days = new Set(theme.days);
-      heatmap.querySelectorAll('.cell').forEach((c) => {
-        if (days.has(c.dataset.date)) c.classList.add('is-marked');
-      });
-      heatmap.classList.add('filtered');
-      status.textContent =
-        `“${theme.word}” appears on ${theme.count} ${theme.count === 1 ? 'day' : 'days'}`;
-    });
+      '</div>';
   }
 
-  return { render };
+  // build the focused view for one theme; returns false if unknown
+  function openTheme(word) {
+    const theme = themes.find((t) => t.word === word);
+    if (!theme) return false;
+
+    document.getElementById('theme-view-title').textContent = word;
+    const n = theme.count;
+    document.getElementById('theme-view-sub').textContent =
+      `You returned to this on ${n} ${n === 1 ? 'day' : 'days'}.`;
+
+    const days = theme.days.slice().sort((a, b) => (a < b ? 1 : -1)); // newest first
+    document.getElementById('theme-entries').innerHTML = days.map((id) => {
+      const e = entriesById.get(id);
+      if (!e) return '';
+      const d = new Date(id + 'T00:00:00');
+      const dateStr = d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+      const ageStr = e.age != null ? `age ${e.age}` : '';
+      return `<button type="button" class="theme-entry" data-date="${id}">` +
+        `<span class="te-date">${dateStr}<span class="te-age">${ageStr}</span></span>` +
+        `<span class="te-snippet">${snippet(e.text, word)}</span></button>`;
+    }).join('');
+    return true;
+  }
+
+  return { render, openTheme };
 })();

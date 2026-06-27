@@ -295,9 +295,30 @@ body {
   font-family: var(--serif); font-style: italic; color: var(--ember-soft);
 }
 
-/* when a theme is selected, its days light up and the rest recede */
-.heatmap.filtered .cell:not(.is-marked) { opacity: 0.22; }
-.cell.is-marked { box-shadow: 0 0 0 1.5px var(--ember), 0 0 6px rgba(201, 138, 75, 0.6); }
+/* ── theme view: every day you wrote about one theme ────────────────────────── */
+#theme-view { justify-content: flex-start; }
+.theme-view-body { width: 100%; max-width: var(--measure); margin: 1.5rem auto 0; }
+.theme-view-title {
+  font-family: var(--serif); font-weight: 400; font-size: 2rem; color: var(--paper);
+  margin: 0.6rem 0 0.4rem; letter-spacing: -0.01em;
+}
+.theme-view-sub { color: var(--paper-dim); font-style: italic; margin-bottom: 2rem; }
+
+.theme-entries { display: flex; flex-direction: column; gap: 0.9rem; }
+.theme-entry {
+  text-align: left; cursor: pointer; width: 100%;
+  background: var(--ink-soft); border: 1px solid var(--ink-line); border-radius: 3px;
+  padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.55rem;
+  transition: border-color 0.3s ease;
+}
+.theme-entry:hover { border-color: var(--ember-soft); }
+.te-date {
+  font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+.te-age { color: var(--ember-soft); margin-left: 0.6rem; }
+.te-snippet { font-family: var(--serif); color: var(--paper-dim); line-height: 1.65; }
+.te-snippet mark { background: none; color: var(--ember); }
 
 .heatmap { display: flex; flex-direction: column; gap: 2.2rem; }
 .year-block { display: flex; align-items: flex-start; gap: 1.1rem; }

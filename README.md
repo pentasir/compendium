@@ -20,9 +20,9 @@ It is local-first by design. There is no account, no server, and no network call
 
 ![The heatmap archive](docs/heatmap.png)
 
-**What you keep returning to.** Recurring words surface on their own; click one to light up every day it appears across your timeline, and see whether your thinking is moving or circling.
+**What you keep returning to.** Recurring words surface on their own; click one to see every day you wrote about it, each with the word in context, and read any of them in full. The premise made visible: are you moving, or circling?
 
-![Recurring themes](docs/themes.png)
+![A recurring theme and the days it appears](docs/themes.png)
 
 **The thread.** Clicking a day opens its month as a string of beads; hovering previews the day.
 
@@ -67,7 +67,7 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 - [x] **Phase 1: the writing ritual.** First-run setup, today-only entry, autosave, read-back.
 - [x] **Phase 2: the heatmap home.** A year-by-year grid with the age you were down the left, cell intensity by entry length, and a read-only view of any past day.
 - [x] **Phase 3: the thread drilldown.** Clicking a day opens its month as a string of day-beads, with a preview on hover and the full entry on click.
-- [x] **Phase 4: local pattern detection.** Recurring themes surfaced from your own words, with no AI; click one to light up its days across the heatmap.
+- [x] **Phase 4: local pattern detection.** Recurring themes surfaced from your own words, with no AI; click one to read every day you wrote about it, in context.
 - [x] **Markdown backup.** Export every entry as Obsidian-compatible Markdown (a `.zip` of one file per day) and import it back, merging without overwriting. Local-first, so this is also how you move between devices.
 - [ ] **Phase 5: polish and deploy.** PWA install niceties and a final calm pass.
 
