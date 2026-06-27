@@ -1,6 +1,12 @@
+<div align="center">
+
+<img src="docs/icon.png" alt="Compendium icon" width="128" height="128">
+
 # Compendium
 
 ![license MIT](https://img.shields.io/badge/license-MIT-c98a4b) ![data stays on your device](https://img.shields.io/badge/data-stays%20on%20your%20device-3fb950) ![network requests zero](https://img.shields.io/badge/network%20requests-zero-3fb950) ![account none](https://img.shields.io/badge/account-none-3fb950) ![runs web and desktop](https://img.shields.io/badge/runs-web%20%2B%20desktop-58a6ff)
+
+</div>
 
 A daily reflection that stays on your device. One entry a day. You have to be here to write it.
 
