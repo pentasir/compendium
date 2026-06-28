@@ -43,6 +43,25 @@ const Heatmap = (() => {
       : new Date(year, 11, 31);
     const todayKey = todayId(now);
 
+    // a thin month axis above the grid: each label sits on the week-column
+    // where that month begins, so a glance can place a square in time.
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const axis = document.createElement('div');
+    axis.className = 'month-axis';
+    const jan1 = new Date(year, 0, 1);
+    for (let m = 0; m < 12; m++) {
+      const first = new Date(year, m, 1);
+      if (first > end) break;
+      const dayOfYear = Math.round((first - jan1) / 86400000);
+      const col = Math.floor((dayOfYear + startDow) / 7) + 1;
+      const lab = document.createElement('span');
+      lab.className = 'ma-label';
+      lab.textContent = months[m];
+      lab.style.gridColumn = col;
+      axis.appendChild(lab);
+    }
+
     const cursor = new Date(year, 0, 1);
     let dayIndex = 0;
     while (cursor <= end) {
@@ -68,8 +87,13 @@ const Heatmap = (() => {
       dayIndex++;
     }
 
+    const gridCol = document.createElement('div');
+    gridCol.className = 'grid-col';
+    gridCol.appendChild(axis);
+    gridCol.appendChild(grid);
+
     block.appendChild(label);
-    block.appendChild(grid);
+    block.appendChild(gridCol);
     return block;
   }
 

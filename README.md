@@ -28,7 +28,7 @@ It is local-first by design. There is no account, no server, and no network call
 
 ![The writing screen](docs/writing-page.png)
 
-**The archive.** A heatmap of your writing life, year by year, with the age you were down the left and cell intensity by how much you wrote.
+**The archive.** A heatmap of your writing life, year by year, with the age you were down the left, a month axis across the top, and cell intensity by how much you wrote.
 
 ![The heatmap archive](docs/heatmap.png)
 
