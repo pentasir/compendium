@@ -24,6 +24,10 @@ It is local-first by design. There is no account, no server, and no network call
 
 ![The onboarding screen](docs/writing.png)
 
+**The daily ritual.** One free-form entry a day with a single prompt, "What's on your mind today?", a quiet guidance note, and a reminder that no one is reading this but you.
+
+![The writing screen](docs/writing-page.png)
+
 **The archive.** A heatmap of your writing life, year by year, with the age you were down the left and cell intensity by how much you wrote.
 
 ![The heatmap archive](docs/heatmap.png)
