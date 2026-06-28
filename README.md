@@ -30,7 +30,7 @@ It is local-first by design. There is no account, no server, and no network call
 
 **The archive.** A heatmap of your writing life, year by year, with the age you were down the left, a month axis across the top, and cell intensity by how much you wrote.
 
-![The heatmap archive](docs/heatmap.png)
+![The heatmap archive](docs/heatmap.png?v=2)
 
 **What you keep returning to.** Recurring words surface on their own; click one to see every day you wrote about it, each with the word in context, and read any of them in full. The premise made visible: are you moving, or circling?
 
