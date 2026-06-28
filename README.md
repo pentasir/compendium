@@ -20,9 +20,9 @@ It is local-first by design. There is no account, no server, and no network call
 
 ## A look inside
 
-**The daily ritual.** One free-form entry a day, with a quiet prompt and a guidance note, then a deliberate "Done for today" that seals the entry until midnight.
+**First run.** Compendium asks for one thing, the day you were born, so it can place each entry against the age you were when you wrote it. That date never leaves your device.
 
-![The writing screen](docs/writing.png)
+![The onboarding screen](docs/writing.png)
 
 **The archive.** A heatmap of your writing life, year by year, with the age you were down the left and cell intensity by how much you wrote.
 
