@@ -65,7 +65,8 @@ const Themes = (() => {
           `<span class="tb-track"><span class="tb-fill" style="width:${pct}%"></span></span>` +
           `<span class="tb-count">${t.count} ${t.count === 1 ? 'day' : 'days'}</span></button>`;
       }).join('') +
-      '</div>';
+      '</div>' +
+      '<button type="button" class="themes-more" id="to-timeline">see them over time →</button>';
   }
 
   // build the focused view for one theme; returns false if unknown

@@ -159,6 +159,19 @@
     </div>
   </section>
 
+  <!-- ───────────────────────── recurring thoughts, over time ───────────────────────── -->
+  <section id="timeline-view" class="screen" hidden>
+    <nav class="app-nav">
+      <button type="button" class="nav-link" id="timeline-back">← The archive</button>
+      <button type="button" class="nav-link nav-cta" id="timeline-today">Write today</button>
+    </nav>
+    <div class="timeline-body">
+      <p class="kicker">What you keep returning to</p>
+      <p class="timeline-sub">Each thread is a word you came back to. A thought that clusters is a phase you moved through; one that runs the whole width is a loop you keep circling.</p>
+      <div class="tl" id="timeline-host"></div>
+    </div>
+  </section>
+
   <!-- ───────────────────────── settings ───────────────────────── -->
   <section id="settings" class="screen" hidden>
     <nav class="app-nav">
@@ -203,6 +216,7 @@
   <script src="js/nav.js"></script>
   <script src="js/backup.js"></script>
   <script src="js/themes.js"></script>
+  <script src="js/timeline.js"></script>
   <script>
     // The service worker is for the web PWA (offline). In the desktop app it is
     // pointless and only causes stale-asset bugs, so skip it there and clean up

@@ -18,9 +18,10 @@
 
 (() => {
   const { todayId } = window.CDate;
-  const ids = ['onboarding', 'ritual', 'archive', 'thread', 'reader', 'settings', 'theme-view'];
+  const ids = ['onboarding', 'ritual', 'archive', 'thread', 'reader', 'settings', 'theme-view', 'timeline-view'];
   const screens = ids.map((id) => document.getElementById(id));
-  let readerOrigin = 'thread'; // where the reader's back button returns to
+  let readerOrigin = 'thread';   // where the reader's back button returns to
+  let themeOrigin = 'archive';   // where the theme view's back button returns to
 
   function show(id) {
     screens.forEach((s) => { s.hidden = s.id !== id; });
@@ -48,7 +49,7 @@
     await Themes.render();
     show('archive');
   });
-  ['to-today', 'thread-today', 'reader-today', 'settings-today', 'theme-today'].forEach((id) => {
+  ['to-today', 'thread-today', 'reader-today', 'settings-today', 'theme-today', 'timeline-today'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('click', () => show('ritual'));
   });
@@ -68,12 +69,28 @@
     show('thread');
   });
 
-  // archive: a theme chip opens the focused theme view
-  document.getElementById('themes').addEventListener('click', (e) => {
+  // archive: a theme chip opens the focused theme view; "see them over time"
+  // opens the timeline of every recurring word.
+  document.getElementById('themes').addEventListener('click', async (e) => {
+    if (e.target.closest('.themes-more')) {
+      await Timeline.render();
+      show('timeline-view');
+      return;
+    }
     const chip = e.target.closest('.theme');
-    if (chip && Themes.openTheme(chip.dataset.word)) show('theme-view');
+    if (chip && Themes.openTheme(chip.dataset.word)) { themeOrigin = 'archive'; show('theme-view'); }
   });
-  document.getElementById('theme-back').addEventListener('click', () => show('archive'));
+  document.getElementById('theme-back').addEventListener('click', () => show(themeOrigin));
+
+  // timeline: back to archive; a word opens its theme drill-in; a mark opens
+  // that day. Reached from here, the theme view returns to the timeline.
+  document.getElementById('timeline-back').addEventListener('click', () => show('archive'));
+  document.getElementById('timeline-host').addEventListener('click', (e) => {
+    const label = e.target.closest('.tl-label');
+    if (label && Themes.openTheme(label.dataset.word)) { themeOrigin = 'timeline-view'; show('theme-view'); return; }
+    const dot = e.target.closest('.tl-dot');
+    if (dot) openReaderFor(dot.dataset.date, 'timeline-view');
+  });
   document.getElementById('theme-entries').addEventListener('click', (e) => {
     const row = e.target.closest('.theme-entry');
     if (row) openReaderFor(row.dataset.date, 'theme-view');
@@ -94,7 +111,8 @@
     if (e.key !== 'Escape') return;
     const vis = (id) => !document.getElementById(id).hidden;
     if (vis('reader')) show(readerOrigin);
-    else if (vis('theme-view')) show('archive');
+    else if (vis('theme-view')) show(themeOrigin);
+    else if (vis('timeline-view')) show('archive');
     else if (vis('settings')) show('archive');
     else if (vis('thread')) show('archive');
     else if (vis('archive')) show('ritual');

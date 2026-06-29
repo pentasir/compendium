@@ -36,6 +36,10 @@ It is local-first by design. There is no account, no server, and no network call
 
 ![A recurring theme and the days it appears](docs/themes.png)
 
+**Threads, over time.** Behind the list, every recurring word becomes a thread along a shared timeline. A thought that clusters is a phase you moved through; one that runs the whole width is a loop you keep circling.
+
+![Recurring thoughts plotted over time](docs/timeline.png)
+
 **The thread.** Clicking a day opens its month as a string of beads; hovering previews the day.
 
 ![The month thread](docs/thread.png)
@@ -49,7 +53,7 @@ It is local-first by design. There is no account, no server, and no network call
 - **One entry per day.** A single free-form writing surface that asks *"What's on your mind today?"* No tags, no fields, no structure. Just thought.
 - **You have to be present.** You can only write today's entry, today. There is no backdating, no importing, no bulk entry, and the timestamp is set by the device rather than by you. The constraint is the point: it is a wind-down ritual, not a backlog to clear.
 - **Themes emerge. You don't assign them.** Recurring topics surface on their own from your own words.
-- **Your history becomes a map.** A GitHub-style heatmap of your writing life (years stacked, with the age you were on each), drilling down to a day-by-day timeline and, eventually, a constellation of the themes you keep returning to.
+- **Your history becomes a map.** A GitHub-style heatmap of your writing life (years stacked, with the age you were on each), drilling down to a day-by-day timeline and to a timeline of the themes you keep returning to.
 
 ## Privacy model
 
@@ -98,10 +102,11 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 - [x] **Phase 2: the heatmap home.** A year-by-year grid with the age you were down the left, cell intensity by entry length, and a read-only view of any past day.
 - [x] **Phase 3: the thread drilldown.** Clicking a day opens its month as a string of day-beads, with a preview on hover and the full entry on click.
 - [x] **Phase 4: local pattern detection.** Recurring themes surfaced from your own words, with no AI; click one to read every day you wrote about it, in context.
+- [x] **Themes over time.** A timeline where each recurring word is a thread across the months, so a glance tells you whether a thought is a phase you moved through or a loop you keep circling.
 - [x] **Markdown backup.** Export every entry as Obsidian-compatible Markdown (a `.zip` of one file per day) and import it back, merging without overwriting. Local-first, so this is also how you move between devices.
 - [ ] **Phase 5: polish and deploy.** PWA install niceties and a final calm pass.
 
-Deferred: a constellation theme view, and an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on it.
+Deferred: an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on it.
 
 ## Stack
 

@@ -49,7 +49,7 @@
    (the writing textarea keeps its caret instead, so it is excluded) */
 .nav-link:focus-visible, .nav-cta:focus-visible, .begin-btn:focus-visible,
 .tip-dismiss:focus-visible, .cell:focus-visible, .tdot:focus-visible,
-.dob-field:focus-visible {
+.dob-field:focus-visible, .themes-more:focus-visible, .tl-label:focus-visible {
   outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 2px;
 }
 
@@ -317,6 +317,65 @@ body {
   font-family: var(--label); font-size: 0.68rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--paper-faint); white-space: nowrap;
 }
+
+/* "see them over time": the entry point from the bars into the timeline */
+.themes-more {
+  margin-top: 1.4rem; background: none; border: none; cursor: pointer;
+  font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--paper-faint); transition: color 0.25s ease;
+}
+.themes-more:hover { color: var(--ember); }
+
+/* ── the timeline: recurring thoughts, over time ────────────────────────────── */
+#timeline-view { justify-content: flex-start; }
+.timeline-body { width: 100%; max-width: var(--measure); margin: 1.5rem auto 0; }
+.timeline-sub {
+  font-family: var(--serif); font-style: italic; color: var(--paper-dim);
+  line-height: 1.6; max-width: 34rem; margin: 0.6rem 0 2.4rem;
+}
+.tl { display: flex; flex-direction: column; }
+.tl-empty { color: var(--paper-dim); font-style: italic; max-width: 32rem; line-height: 1.6; }
+
+/* a shared month axis, offset to align with the tracks */
+.tl-axis { display: flex; margin-bottom: 1rem; }
+.tl-spacer { width: 8rem; flex: none; }
+.tl-axisline {
+  position: relative; flex: 1; height: 0.8rem;
+  font-family: var(--label); font-size: 0.58rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--paper-faint);
+}
+.tl-axisline span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+
+.tl-row { display: flex; align-items: center; padding: 0.45rem 0; border-radius: 4px; transition: background 0.15s ease; }
+.tl-row:hover { background: var(--ink-soft); }
+.tl-label { width: 8rem; flex: none; text-align: right; padding-right: 1.1rem; background: none; border: none; cursor: pointer; }
+.tl-word { font-family: var(--serif); font-size: 1.05rem; color: var(--paper-dim); transition: color 0.25s ease; }
+.tl-label:hover .tl-word { color: var(--ember); }
+.tl-count {
+  display: block; margin-top: 0.15rem; font-family: var(--label); font-size: 0.56rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper-faint);
+}
+
+.tl-track { position: relative; flex: 1; height: 22px; }
+.tl-track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--ink-line); }
+.tl-span {
+  position: absolute; top: 50%; transform: translateY(-50%); height: 5px; border-radius: 3px;
+  background: linear-gradient(90deg, rgba(201,138,75,0.05), rgba(201,138,75,0.18), rgba(201,138,75,0.05));
+}
+.tl-dot {
+  position: absolute; top: 50%; width: 7px; height: 7px; border-radius: 50%;
+  transform: translate(-50%, -50%); background: var(--ember); opacity: 0.6;
+  cursor: pointer; transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.tl-dot:hover { opacity: 1; transform: translate(-50%, -50%) scale(1.7); box-shadow: 0 0 8px rgba(201,138,75,0.55); }
+
+.tl-tip {
+  position: fixed; z-index: 60; pointer-events: none;
+  background: #0e0f13; border: 1px solid var(--ink-line); border-radius: 7px;
+  padding: 6px 10px; font-family: var(--label); font-size: 0.72rem; color: var(--paper);
+  white-space: nowrap; opacity: 0; transform: translateY(4px); transition: opacity 0.12s ease;
+}
+.tl-tip.on { opacity: 1; transform: translateY(0); }
 
 /* ── theme view: every day you wrote about one theme ────────────────────────── */
 #theme-view { justify-content: flex-start; }
