@@ -95,6 +95,7 @@ const Timeline = (() => {
       if (!tip.classList.contains('on')) return;
       let x = e.clientX + 14, y = e.clientY + 16;
       if (x + tip.offsetWidth > window.innerWidth - 8) x = e.clientX - tip.offsetWidth - 14;
+      x = Math.max(8, Math.min(x, window.innerWidth - tip.offsetWidth - 8));
       tip.style.left = x + 'px';
       tip.style.top = y + 'px';
     });
