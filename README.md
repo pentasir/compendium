@@ -4,7 +4,7 @@
 
 # Compendium
 
-![license MIT](https://img.shields.io/badge/license-MIT-c98a4b) ![data stays on your device](https://img.shields.io/badge/data-stays%20on%20your%20device-3fb950) ![network requests zero](https://img.shields.io/badge/network%20requests-zero-3fb950) ![account none](https://img.shields.io/badge/account-none-3fb950) ![runs web and desktop](https://img.shields.io/badge/runs-web%20%2B%20desktop-58a6ff)
+[![live demo](https://img.shields.io/badge/live-demo-c98a4b)](https://pentasir.github.io/compendium/) ![license MIT](https://img.shields.io/badge/license-MIT-c98a4b) ![data stays on your device](https://img.shields.io/badge/data-stays%20on%20your%20device-3fb950) ![network requests zero](https://img.shields.io/badge/network%20requests-zero-3fb950) ![account none](https://img.shields.io/badge/account-none-3fb950) ![runs web and desktop](https://img.shields.io/badge/runs-web%20%2B%20desktop-58a6ff)
 
 </div>
 
@@ -65,6 +65,8 @@ Your thoughts never leave your device. This is not a policy, it is an architectu
 - A manual Markdown export (one file per day, with frontmatter, readable in Obsidian or any editor) gives you a backup and a way to move your data, entirely under your control.
 
 ## Running it
+
+Try the live web app at **[pentasir.github.io/compendium](https://pentasir.github.io/compendium/)**, or run it locally.
 
 It is a static site with no build step.
 
