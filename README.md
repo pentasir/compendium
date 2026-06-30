@@ -106,7 +106,7 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 - [x] **Phase 4: local pattern detection.** Recurring themes surfaced from your own words, with no AI; click one to read every day you wrote about it, in context.
 - [x] **Themes over time.** A timeline where each recurring word is a thread across the months, so a glance tells you whether a thought is a phase you moved through or a loop you keep circling.
 - [x] **Markdown backup.** Export every entry as Obsidian-compatible Markdown (a `.zip` of one file per day) and import it back, merging without overwriting. Local-first, so this is also how you move between devices.
-- [ ] **Phase 5: polish and deploy.** PWA install niceties and a final calm pass.
+- [x] **Phase 5: polish and deploy.** Shipped as a live web PWA ([pentasir.github.io/compendium](https://pentasir.github.io/compendium/)), installable and offline, plus a native desktop build, with a final calm pass.
 
 Deferred: an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on it.
 
