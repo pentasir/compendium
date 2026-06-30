@@ -108,7 +108,7 @@ Built in phases. See [BUILDSTORY.md](BUILDSTORY.md) for the full design log and 
 - [x] **Markdown backup.** Export every entry as Obsidian-compatible Markdown (a `.zip` of one file per day) and import it back, merging without overwriting. Local-first, so this is also how you move between devices.
 - [x] **Phase 5: polish and deploy.** Shipped as a live web PWA ([pentasir.github.io/compendium](https://pentasir.github.io/compendium/)), installable and offline, plus a native desktop build, with a final calm pass.
 
-Deferred: an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on it.
+Deferred: a low-friction quick-capture surface (a menu-bar app or browser extension) that appends a line to today's single entry without opening the full app, so the one-entry-a-day model holds while capture gets easier; and an optional AI reflection layer (a one-time unlock) that reads patterns across time. The core never depends on either.
 
 ## Stack
 
